@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import LiveMatch from './LiveMatch';
 import './index.css';
 
 ReactDOM.render(
-  <App />,
+  <LiveMatch />,
   document.getElementById('root')
 );
