@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import LiveMatch from './LiveMatch';
+import LiveMatchsSection from './LiveMatchsSection';
 
 class LiveMatchsList extends Component {
   render() {
     return (
       <div className="LiveMatch">
-        {this.state.matchs.map((match) => <LiveMatch key={match._id} time={match.date} homeTeam={match.homeTeam.name} awayTeam={match.awayTeam.name}/>)}
+        <p>{this.state.message}</p>
+        {this.state.matchs.map((league) => <LiveMatchsSection key={league.region+league.league} region={league.region} league={league.league} matchs={league.matchs}/>)}
       </div>
     );
   }
 
   constructor(props) {
     super(props);
-    this.state = {matchs: [],loaded:false};
+    this.state = {matchs: [],loaded:false,message:""};
   }
 
   componentDidMount() {
@@ -21,7 +22,7 @@ class LiveMatchsList extends Component {
 
   fetchData(){
     // this._executeQuery("http://127.0.0.1:8080/api/matchs");
-    this._executeQuery("live-matchs.json");
+    this._executeQuery("http://127.0.0.1:8080/api/foo");
   }
 
   _executeQuery(query) {
@@ -33,7 +34,8 @@ class LiveMatchsList extends Component {
        this.setState({
         loaded: false,
         message: 'Something bad happened ' + error
-     }));
+      })
+    );
   }
 
   _handleResponse(response) {

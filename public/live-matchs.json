@@ -1,0 +1,116 @@
+[
+	{
+		"region": "ACVF",
+		"league": 2,
+		"matchs": [
+			{
+				"_id": "57b762aeb97f2d7f8200000b",
+				"region": "ACVF 2ème ligue",
+				"userId": "",
+				"date": "2016-08-21T12:30:00.000Z",
+				"awayTeam": {
+					"score": 0,
+					"name": "FC Bex I",
+					"goals": [ ]
+				},
+				"homeTeam": {
+					"score": 0,
+					"name": "FC Lutry I",
+					"goals": [ ]
+				}
+			},
+			{
+				"_id": "57b762aeb97f2d7f8200000a",
+				"region": "ACVF 2ème ligue",
+				"userId": "",
+				"date": "2016-08-21T13:30:00.000Z",
+				"awayTeam": {
+					"score": 0,
+					"name": "FC Lausanne I",
+					"goals": [ ]
+				},
+				"homeTeam": {
+					"score": 0,
+					"name": "FC Morges I",
+					"goals": [ ]
+				}
+			},
+		]
+	},
+	{
+		"region": "AFF",
+		"league": 2,
+		"matchs": [
+			{
+				"_id": "57b762aeb97f2d7f8200000b",
+				"region": "AFF 2ème ligue",
+				"userId": "",
+				"date": "2016-08-21T12:30:00.000Z",
+				"awayTeam": {
+					"score": 0,
+					"name": "FC Chatel I",
+					"goals": [ ]
+				},
+				"homeTeam": {
+					"score": 0,
+					"name": "FC Morat I",
+					"goals": [ ]
+				}
+			},
+			{
+				"_id": "57b762aeb97f2d7f8200000a",
+				"region": "AFF 2ème ligue",
+				"userId": "",
+				"date": "2016-08-21T13:30:00.000Z",
+				"awayTeam": {
+					"score": 0,
+					"name": "FC Fribourg I",
+					"goals": [ ]
+				},
+				"homeTeam": {
+					"score": 0,
+					"name": "FC Romont I",
+					"goals": [ ]
+				}
+			},
+		]
+	},
+	{
+		"region": "AFF",
+		"league": 5,
+		"matchs": [
+			{
+				"_id": "57b762aeb97f2d7f8200000b",
+				"region": "AFF 5ème ligue",
+				"userId": "",
+				"date": "2016-08-21T12:30:00.000Z",
+				"awayTeam": {
+					"score": 0,
+					"name": "FC Villarepos I",
+					"goals": [ ]
+				},
+				"homeTeam": {
+					"score": 0,
+					"name": "FC Fétigny I",
+					"goals": [ ]
+				}
+			},
+			{
+				"_id": "57b762aeb97f2d7f8200000a",
+				"region": "AFF 5ème ligue",
+				"userId": "",
+				"date": "2016-08-21T13:30:00.000Z",
+				"awayTeam": {
+					"score": 0,
+					"name": "FC Marly I",
+					"goals": [ ]
+				},
+				"homeTeam": {
+					"score": 0,
+					"name": "FC Matran I",
+					"goals": [ ]
+				}
+			},
+		]
+	}
+]
