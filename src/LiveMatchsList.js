@@ -18,11 +18,11 @@ class LiveMatchsList extends Component {
 
   componentDidMount() {
     this.fetchData()
+    var timer = setInterval(this.fetchData.bind(this), 60000);
   }
 
   fetchData(){
-    // this._executeQuery("http://127.0.0.1:8080/api/matchs");
-    this._executeQuery("http://127.0.0.1:8080/api/foo");
+    this._executeQuery("http://127.0.0.1:8080/api/livematchs")
   }
 
   _executeQuery(query) {
