@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 class LiveMatch extends Component {
   render() {
     return (
-      <div className="LiveMatch">
+      <div className="LiveMatch" key="{this.props.key}">
         <div className="LiveMatch-time">
-          <h2>08:00</h2>
+          <h2>{this.props.time}</h2>
         </div>
         <div className="LiveMatch-homeTeam">
-          FC Lucerne
+          {this.props.homeTeam}
         </div>
         <div className="LiveMatch-AwayTeam">
-          FC Lucerne
+          {this.props.awayTeam}
         </div>
       </div>
     );
