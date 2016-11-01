@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import LiveMatchsSection from './LiveMatchsSection';
+import './LiveMatchsList.css';
 
 class LiveMatchsList extends Component {
   render() {
     return (
-      <div className="LiveMatch">
-        <p>{this.state.message}</p>
+      <div className="list">
         {this.state.matchs.map((league) => <LiveMatchsSection key={league.region+league.league} region={league.region} league={league.league} matchs={league.matchs}/>)}
       </div>
     );

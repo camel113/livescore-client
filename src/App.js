@@ -19,15 +19,12 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div className="App">
-        <Drawer open={this.state.open} docked={false} onRequestChange={this.handleToggle.bind(this)}>
-          <MenuItem>Menu Item</MenuItem>
-          <MenuItem>Menu Item 2</MenuItem>
-        </Drawer>
+        <div className="app">
+          <Drawer open={this.state.open} docked={false} onRequestChange={this.handleToggle.bind(this)}>
+            <MenuItem>Menu Item</MenuItem>
+            <MenuItem>Menu Item 2</MenuItem>
+          </Drawer>
           <AppBar title="Livescore" onLeftIconButtonTouchTap={this.handleToggle.bind(this)}/>
-          <div className="App-header">
-            <h2>Livescore</h2>
-          </div>
           <LiveMatchsList />
         </div>
       </MuiThemeProvider>

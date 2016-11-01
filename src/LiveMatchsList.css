@@ -1,0 +1,16 @@
+.list{
+	padding:0 5px;
+}
+.time, .teams>div{
+	padding: 0 4px;
+	/*font-size: 0.9em;*/
+}
+.match>div{
+	/*border-top: 1px solid black;*/
+	padding: 5px 0;
+}
+.live-match-section>h1{
+	font-weight: normal;
+	font-size: 1.2em;
+	text-align: center;
+}
