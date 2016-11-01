@@ -2,15 +2,27 @@ import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import Divider from 'material-ui/Divider';
+import moment from 'moment'
 
 class LiveMatch extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    console.log(this.props.time)
+    console.log(moment().locale())
+    console.log(moment(this.props.time).format("LT"))
+  }
+
   render() {
     return (
       <div className="match">
         <Divider/>
         <Flexbox flexDirection="row">
           <Flexbox flexDirection="column">
-            <Flexbox className="time">22:00</Flexbox>
+            <Flexbox className="time">{moment(this.props.time).format("HH:mm")}</Flexbox>
             <Flexbox></Flexbox>
           </Flexbox>
           <Flexbox flexGrow={1} flexDirection="column" className="teams">
