@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LiveMatchsList from './LiveMatchsList';
+import App from './App';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
 import './index.css';
 
+injectTapEventPlugin();
+
 ReactDOM.render(
-  <LiveMatchsList />,
+  <App />,
   document.getElementById('root')
 );
