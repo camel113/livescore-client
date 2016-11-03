@@ -13,15 +13,46 @@ class LiveMatch extends Component {
   }
 
   componentDidMount() {
+    setInterval(
+      () => this.computeTime(this.props.time),
+      1000
+    );
+  }
 
+  computeTime(matchDate){
+    var dateNow = Date.now();
+    var minutes = moment(dateNow).diff(matchDate, 'minutes')
+    if(minutes < 0){
+      this.setState({duration:moment(matchDate).format("HH:mm")})
+    } else
+    if(minutes >= 0 && minutes <= 45){
+      this.setState({duration:moment(dateNow).diff(matchDate, 'minutes'),live:true})
+    } else
+    if(minutes > 45 && minutes < 48){ // First half additional time (3')
+      this.setState({duration:45,live:true})
+    } else
+    if(minutes >= 48 && minutes < 63){ // Half-time
+      this.setState({duration:"MT",live:true})
+    } else
+    if(minutes >= 63 && minutes <= 108 ){ // Second half
+      this.setState({duration:moment(dateNow).diff(matchDate, 'minutes')-18,live:true}) // Substract 18 minutes (additional time + half time => 3 + 15)
+    } else
+    if(minutes > 108 && minutes <= 112 ){ // Half-time
+      this.setState({duration:90,live:true})
+    }
+    if(minutes > 112){ // Half-time
+      this.setState({duration:"Fini"})
+    }
   }
 
   render() {
     return (
       <div className="match">
         <Divider/>
-        <Flexbox className={(this.props.showBulkActions ? 'show' : 'hidden')} flexDirection="row">
-          <TimeBox time={this.props.time}/>
+        <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row">
+          <Flexbox className="time-capsule" flexDirection="column" width="50px">
+            <Flexbox className="time">{this.state.duration}</Flexbox>
+          </Flexbox>
           <Flexbox flexGrow={1} flexDirection="column" className="teams">
             <Flexbox>{this.props.homeTeam}</Flexbox>
             <Flexbox>{this.props.awayTeam}</Flexbox>
@@ -44,37 +75,10 @@ class TimeBox extends Component{
   }
 
   componentDidMount() {
-    setInterval(
-      () => this.computeTime(this.props.time),
-      1000
-    );
+    
   }
 
-  computeTime(matchDate){
-    var dateNow = Date.now();
-    var minutes = moment(dateNow).diff(matchDate, 'minutes')
-    if(minutes < 0){
-      this.setState({duration:moment(matchDate).format("HH:mm")})
-    } else
-    if(minutes >= 0 && minutes <= 45){
-      this.setState({duration:moment(dateNow).diff(matchDate, 'minutes')})
-    } else
-    if(minutes > 45 && minutes < 48){ // First half additional time (3')
-      this.setState({duration:45})
-    } else
-    if(minutes >= 48 && minutes < 63){ // Half-time
-      this.setState({duration:"MT"})
-    } else
-    if(minutes >= 63 && minutes <= 108 ){ // Second half
-      this.setState({duration:moment(dateNow).diff(matchDate, 'minutes')-18}) // Substract 18 minutes (additional time + half time => 3 + 15)
-    } else
-    if(minutes > 108 && minutes <= 112 ){ // Half-time
-      this.setState({duration:90})
-    }
-    if(minutes > 112){ // Half-time
-      this.setState({duration:"Fini"})
-    }
-  }
+  
 
   render(){
     return (
