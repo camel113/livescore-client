@@ -6,7 +6,8 @@
     "css-loader": "^0.25.0",
     "npm": "^3.10.9",
     "react-scripts": "0.7.0",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "sw-precache": "^4.0.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.16.0",
@@ -20,8 +21,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp manifest.json build/ && sw-precache --root='build/' --static-file-globs='build/**/!(*map*)'",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "homepage": "./"
 }

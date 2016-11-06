@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
-import muiThemeable from 'material-ui/styles/muiThemeable';
 import Divider from 'material-ui/Divider';
 import moment from 'moment'
 
@@ -66,29 +65,5 @@ class LiveMatch extends Component {
     );
   }
 }
-
-class TimeBox extends Component{
-
-  constructor(props) {
-    super(props);
-    this.state = {duration: -1};
-  }
-
-  componentDidMount() {
-    
-  }
-
-  
-
-  render(){
-    return (
-      <Flexbox flexDirection="column">
-        <Flexbox className="duration">{this.state.duration}</Flexbox>
-      </Flexbox>
-    )
-  }
-}
-
-
 
 export default LiveMatch;
