@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import LiveMatchsList from './LiveMatchsList';
+import { Link} from 'react-router'
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
@@ -16,16 +17,22 @@ class App extends Component {
   handleToggle(){
     this.setState({open: !this.state.open});
   }
+  showOfflineWarning(){
+
+  }
+  hideOfflineWarning(){
+    
+  }
   render() {
     return (
       <MuiThemeProvider>
         <div className="app">
           <Drawer open={this.state.open} docked={false} onRequestChange={this.handleToggle.bind(this)}>
-            <MenuItem>Menu Item</MenuItem>
-            <MenuItem>Menu Item 2</MenuItem>
+            <MenuItem><Link to="/">Home</Link></MenuItem>
+            <MenuItem><Link to="/available">Reporter</Link></MenuItem>
           </Drawer>
           <AppBar title="Livescore" onLeftIconButtonTouchTap={this.handleToggle.bind(this)}/>
-          <LiveMatchsList />
+          {this.props.children}
         </div>
       </MuiThemeProvider>
     );

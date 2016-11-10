@@ -28,13 +28,5 @@
       To begin the development, run `npm start`.
       To create a production bundle, use `npm run build`.
     -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js').catch(function(ex) {
-          console.warn(ex);
-          console.warn('(This warning can be safely ignored outside of the production build.)');
-        });
-      }
-    </script>
   </body>
 </html>
