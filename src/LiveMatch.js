@@ -3,6 +3,8 @@ import Flexbox from 'flexbox-react';
 import Divider from 'material-ui/Divider';
 import moment from 'moment'
 
+import Match from './Match';
+
 class LiveMatch extends Component {
 
   constructor(props) {
@@ -52,10 +54,7 @@ class LiveMatch extends Component {
           <Flexbox className="time-capsule" flexDirection="column" width="50px">
             <Flexbox className="time">{this.state.duration}</Flexbox>
           </Flexbox>
-          <Flexbox flexGrow={1} flexDirection="column" className="teams">
-            <Flexbox>{this.props.homeTeam}</Flexbox>
-            <Flexbox>{this.props.awayTeam}</Flexbox>
-          </Flexbox>
+          <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
           <Flexbox flexDirection="column">
             <Flexbox>0</Flexbox>
             <Flexbox>1</Flexbox>

@@ -3,6 +3,7 @@ import {List, ListItem} from 'material-ui/List';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 import Flexbox from 'flexbox-react';
 import './Available.css';
+import Match from './Match';
 
 class AvailableMatchsList extends Component {
 
@@ -40,10 +41,7 @@ class AvailableMatchsList extends Component {
 				            <Flexbox>10/12</Flexbox>
 				            <Flexbox>20h00</Flexbox>
 				          </Flexbox>
-				          <Flexbox flexGrow={1} flexDirection="column" className="available-teams" minWidth="0px">
-				            <div>FC Avenches</div>
-				            <div>FC Portalban-Gletterens II dsadasda</div>
-				          </Flexbox>
+				          <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
 				          <Flexbox flexDirection="column" minWidth="30px">
             				<div>{<ActionInfo />}</div>
           				</Flexbox>
