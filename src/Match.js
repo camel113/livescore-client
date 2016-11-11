@@ -3,10 +3,6 @@ import Flexbox from 'flexbox-react';
 
 class Match extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Flexbox flexGrow={1} flexDirection="column" className="match-teams" minWidth="0px">

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {List} from 'material-ui/List';
-import Flexbox from 'flexbox-react';
 import './Available.css';
-import Match from './Match';
 import AvailableMatchsSection from './AvailableMatchsSection';
 
 class AvailableMatchsList extends Component {

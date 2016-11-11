@@ -7,11 +7,6 @@ import Match from './Match';
 
 class AvailableMatch extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-
   render() {
     return (
       <ListItem key={1} primaryText={

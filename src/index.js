@@ -8,7 +8,6 @@ import AvailableMatchsList from './AvailableMatchsList';
 import Login from './Login';
 
 import AuthService from './utils/AuthService'
-import Container from './Container'
 
 console.log(process.env)
 const auth = new AuthService(process.env.REACT_APP_AUTH0_CLIENT_ID,process.env.REACT_APP_AUTH0_DOMAIN);
