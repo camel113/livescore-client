@@ -28,7 +28,7 @@ ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App} auth={auth}>
  			<IndexRoute component={LiveMatchsList}/>
- 			<Route path="available" component={AvailableMatchsList} onEnter={requireAuth}/>
+ 			<Route path="available" component={AvailableMatchsList}/>
  			 <Route path="login" component={Login} />
     </Route>
   </Router>,
