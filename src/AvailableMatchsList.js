@@ -33,9 +33,6 @@ class AvailableMatchsList extends Component {
 
   _handleResponse(response) {
     var data = response
-    console.log("console.log")
-    console.log(data)
-    // data.map((match) => <LiveMatch/>);
     this.setState({
       loaded: true,
       matchs: data
