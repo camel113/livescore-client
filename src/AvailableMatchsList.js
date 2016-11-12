@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {List} from 'material-ui/List';
-import './Available.css';
 import AvailableMatchsSection from './AvailableMatchsSection';
 
 class AvailableMatchsList extends Component {
