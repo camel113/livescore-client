@@ -8,6 +8,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import moment from 'moment'
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import Match from './Match';
 
@@ -15,7 +16,7 @@ class AvailableMatch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {open:false,errorOpen:false};
+    this.state = {open:false,errorOpen:false,snackSuccessOpen:false,snackFailOpen:false};
   }
 
   handleOpen(){
@@ -23,7 +24,11 @@ class AvailableMatch extends Component {
   };
 
   _handleResponse(json){
-    console.log(json)
+    if(json.updated == true){
+      this.openSnackSuccess()
+    }else{
+      this.openSnackFail()
+    }
   };
 
   handleConfirm(){
@@ -64,7 +69,23 @@ class AvailableMatch extends Component {
   }
 
   openError(){
-    this.setState({errorOpen: true});  
+    this.setState({errorOpen: true});
+  }
+
+  openSnackSuccess(){
+    this.setState({snackSuccessOpen: true});
+  }
+
+  closeSnackSuccess(){
+    this.setState({snackSuccessOpen: false});
+  }
+
+  openSnackFail(){
+    this.setState({snackFailOpen: true});
+  }
+
+  closeSnackFail(){
+    this.setState({snackFailOpen: false});
   }
 
   render() {
@@ -118,6 +139,18 @@ class AvailableMatch extends Component {
         >
           Il semblerait qu'il y ait un problème de connexion. Veuillez réessayer dans quelques minutes
         </Dialog>
+        <Snackbar
+          open={this.state.snackSuccessOpen}
+          message="Le match a été ajouté à tes matchs"
+          autoHideDuration={4000}
+          onRequestClose={this.closeSnackSuccess.bind(this)}
+        />
+        <Snackbar
+          open={this.state.snackFailOpen}
+          message="Le match vient d'être choisi par un autre utilisateur"
+          autoHideDuration={4000}
+          onRequestClose={this.closeSnackFail.bind(this)}
+        />
       </div>
     );
   }
