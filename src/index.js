@@ -5,6 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import LiveMatchsList from './LiveMatchsList';
 import AvailableMatchsList from './AvailableMatchsList';
+import MyMatchs from './MyMatchs';
 import Login from './Login';
 
 import AuthService from './utils/AuthService'
@@ -28,7 +29,8 @@ ReactDOM.render(
     <Route path="/" component={App} auth={auth}>
  			<IndexRoute component={LiveMatchsList}/>
  			<Route path="available" component={AvailableMatchsList}/>
- 			 <Route path="login" component={Login} />
+ 			<Route path="my" component={MyMatchs}/>
+		 	<Route path="login" component={Login} />
     </Route>
   </Router>,
   document.getElementById('root')
