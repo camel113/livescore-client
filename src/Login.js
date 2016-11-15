@@ -1,5 +1,10 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from './utils/AuthService'
+import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  margin: 12
+};
 
 export class Login extends React.Component {
   static propTypes = {
@@ -9,11 +14,13 @@ export class Login extends React.Component {
 
   render() {
     const { auth } = this.props
+    console.log(auth.loggedIn())
     return (
       <div>
-        <h2>Login</h2>
+        <h2>Vous devez être connecté pour accéder à vos matchs et aux matchs disponibles.</h2>
         <div>
-          <button onClick={auth.login.bind(this)}>Login</button>
+          <RaisedButton label="Login" style={style} onClick={auth.login.bind(this)} />
+          <RaisedButton label="Logout" style={style} onClick={auth.logout.bind(this)} />
         </div>
       </div>
     )

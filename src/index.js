@@ -7,6 +7,7 @@ import LiveMatchsList from './LiveMatchsList';
 import AvailableMatchsList from './AvailableMatchsList';
 import MyMatchs from './MyMatchs';
 import Login from './Login';
+import Hello from './Hello';
 
 import AuthService from './utils/AuthService'
 
@@ -28,9 +29,10 @@ ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App} auth={auth}>
  			<IndexRoute component={LiveMatchsList}/>
- 			<Route path="available" component={AvailableMatchsList}/>
- 			<Route path="my" component={MyMatchs}/>
+ 			<Route path="available" component={AvailableMatchsList} onEnter={requireAuth}/>
+ 			<Route path="my" component={MyMatchs} onEnter={requireAuth}/>
 		 	<Route path="login" component={Login} />
+		 	<Route path="hello" component={Hello}/>
     </Route>
   </Router>,
   document.getElementById('root')

@@ -3,7 +3,7 @@ import Auth0Lock from 'auth0-lock'
 export default class AuthService {
   constructor(clientId, domain) {
     // Configure Auth0
-    this.lock = new Auth0Lock(clientId, domain, {})
+    this.lock = new Auth0Lock(clientId, domain, {auth:{redirect:true,redirectUrl: 'http://localhost:3000/hello',responseType: 'token'}})
     // Add callback for lock `authenticated` event
     this.lock.on('authenticated', this._doAuthentication.bind(this))
     // binds login functions to keep this context
