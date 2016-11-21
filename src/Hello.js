@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
-import Flexbox from 'flexbox-react';
+import React, { PropTypes } from 'react'
 
-class Match extends Component {
-
-  render() {
-    return (
-      <Flexbox flexGrow={1} flexDirection="column">
-        <div>Hello</div>
-        <div>World</div>
-      </Flexbox>
-    );
-  }
+const Hello = ({ logged, onHelloClick }) => {
+	console.log("HELLO")
+	return (
+		<div>
+			<button onClick={() => onHelloClick(logged)}>HELLO WORLD</button>
+    	<h1>x{logged}x</h1>
+    </div>
+  )
 }
 
-export default Match;
+Hello.propTypes = {
+  onHelloClick: PropTypes.func.isRequired,
+  logged: PropTypes.string.isRequired
+}
+
+export default Hello
