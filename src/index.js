@@ -6,8 +6,6 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import LiveMatchsList from './LiveMatchsList';
 import AvailableMatchsList from './AvailableMatchsList';
 import MyMatchs from './MyMatchs';
-// import Login from './Login';
-// import Hello from './Hello';
 
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -16,18 +14,20 @@ import SetLoggin from './containers/SetLoggin'
 import IncrementButton from './containers/IncrementButton'
 
 import thunkMiddleware from 'redux-thunk'
-// import AuthService from './utils/AuthService'
 
 console.log(process.env)
-console.log(state)
 
 // validate authentication for private routes
+// const requireAuth = (nextState, replace) => {
+//   if (true) {
+//     replace({ pathname: '/login' })
+//   }
+// }
 const requireAuth = (nextState, replace) => {
-  if (true) {
+  if(!localStorage.getItem('idToken')){
     replace({ pathname: '/login' })
   }
 }
-
 
 
 import './index.css';
@@ -37,6 +37,8 @@ injectTapEventPlugin();
 let createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore)
 
 let store = createStoreWithMiddleware(myApp)
+
+console.log(store)
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,16 +1,4 @@
 import { combineReducers } from 'redux'
-import { logginInfos } from './actions'
-
-const { NOT_CONNECTED } = logginInfos
-
-const logginInfo = (state = NOT_CONNECTED, action) => {
-  switch (action.type) {
-    case 'SET_LOGGIN_INFO':
-      return action.info
-    default:
-      return state
-  }
-}
 
 import { INCREMENT_COUNTER } from './actions'
 
@@ -32,9 +20,8 @@ import {
 // we would also want a util to check if the token is expired.
 function auth(state = {
     isFetching: false,
-    isAuthenticated: localStorage.getItem('id_token') ? true : false
+    isAuthenticated: localStorage.getItem('idToken') ? true : false
   }, action) {
-	console.log(state)
   switch (action.type) {
     case LOCK_SUCCESS:
       return Object.assign({}, state, {
@@ -54,8 +41,7 @@ function auth(state = {
 
 const myApp = combineReducers({
 	incrementx,
-	auth,
-  logginInfo
+	auth
 })
 
 export default myApp
