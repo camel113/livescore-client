@@ -1,17 +1,4 @@
 import Auth0Lock from 'auth0-lock'
-export const SET_LOGGIN_INFO = 'SET_LOGGIN_INFO'
-
-export const logginInfos = {
-  NOT_CONNECTED: 'NOT_CONNECTED',
-  CONNECTED: 'CONNECTED'
-}
-
-export function setLogginInfo(info) {
-  return { type: SET_LOGGIN_INFO, info }
-}
-
-
-
 
 export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
 
@@ -30,14 +17,6 @@ export function incrementAsync() {
   };
 }
 
-// function incrementAsync() {
-//   return dispatch => {
-//     setTimeout(() => {
-//       // Yay! Can invoke sync or async actions with `dispatch`
-//       dispatch(increment());
-//     }, 1000);
-//   };
-// }
 // There are two possible states for our login
 // process and we need actions for each of them.
 //
@@ -99,7 +78,6 @@ export function login() {
   return dispatch => {
   	lock.show()
   	lock.on('authenticated', function(authResult){
-  		console.log("AUH")
   		localStorage.setItem('idToken', authResult.idToken);
   		dispatch(lockSuccess(authResult.profile, authResult.token))
   	})

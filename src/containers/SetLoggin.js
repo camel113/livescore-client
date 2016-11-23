@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { setLogginInfo } from '../actions'
-// import Hello from '../Hello'
 import { login,logoutUser} from '../actions'
 import { Login} from '../Login'
 
@@ -20,11 +19,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
   }
 }
-
-
-
-
-
 
 const SetLoggin = connect(
   mapStateToProps,

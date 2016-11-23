@@ -19,7 +19,7 @@ import thunkMiddleware from 'redux-thunk'
 // import AuthService from './utils/AuthService'
 
 console.log(process.env)
-// const auth = new AuthService(process.env.REACT_APP_AUTH0_CLIENT_ID,process.env.REACT_APP_AUTH0_DOMAIN);
+console.log(state)
 
 // validate authentication for private routes
 const requireAuth = (nextState, replace) => {
