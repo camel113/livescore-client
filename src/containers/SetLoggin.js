@@ -1,28 +1,37 @@
 import { connect } from 'react-redux'
 import { setLogginInfo } from '../actions'
-import Hello from '../Hello'
+// import Hello from '../Hello'
+import { login,logoutUser} from '../actions'
+import { Login} from '../Login'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    logged: state.logginInfo
+    logged: state.auth.isAuthenticated
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log("HERE")
-  console.log(ownProps.logged)
   return {
-    onHelloClick: (loggedInfo) => {
-      console.log("HEREX")
-      console.log(loggedInfo)
-      dispatch(setLogginInfo(loggedInfo))
+    onLoginClick: () => {
+      dispatch(login())
+    },
+    onLogoutClick: () => {
+      dispatch(logoutUser())
     }
   }
 }
 
+
+
+
+
+
 const SetLoggin = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Hello)
+)(Login)
+
+
+
 
 export default SetLoggin

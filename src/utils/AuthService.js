@@ -1,4 +1,4 @@
-import Auth0Lock from 'auth0-lock'
+    import Auth0Lock from 'auth0-lock'
 
 export default class AuthService {
   constructor(clientId, domain) {
@@ -29,6 +29,7 @@ export default class AuthService {
   setToken(idToken){
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken)
+    localStorage.setItem('abf', 'idToken')
   }
 
   getToken(){

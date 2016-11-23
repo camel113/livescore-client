@@ -1,30 +1,37 @@
-import React, { PropTypes as T } from 'react'
-import AuthService from './utils/AuthService'
-import RaisedButton from 'material-ui/RaisedButton';
+import React from 'react'
+// import AuthService from './utils/AuthService'
+// import RaisedButton from 'material-ui/RaisedButton';
 
-const style = {
-  margin: 12
-};
 
 export class Login extends React.Component {
-  static propTypes = {
-    location: T.object,
-    auth: T.instanceOf(AuthService)
-  }
-
+  
   render() {
-    const { auth } = this.props
-    console.log(auth.loggedIn())
+    const { errorMessage, logged } = this.props
     return (
       <div>
-        <h2>Vous devez être connecté pour accéder à vos matchs et aux matchs disponibles.</h2>
-        <div>
-          <RaisedButton label="Login" style={style} onClick={auth.login.bind(this)} />
-          <RaisedButton label="Logout" style={style} onClick={auth.logout.bind(this)} />
-        </div>
+        <button onClick={(event) => this.handleClick(event)} className="btn btn-primary">
+          Login
+        </button>
+        <button onClick={(event) => this.handleLogoutClick(event)} className="btn btn-primary">
+          Logout
+        </button>
+        <h1></h1>
+        <h1>{logged.toString()}</h1>
+        {errorMessage &&
+          <p style={{color:'red'}}>{errorMessage}</p>
+        }
       </div>
     )
+  }
+  
+  handleClick(event) {
+    this.props.onLoginClick()
+  }
+
+  handleLogoutClick(event) {
+    this.props.onLogoutClick()
   }
 }
 
 export default Login;
+
