@@ -77,8 +77,17 @@ export function login() {
   return dispatch => {
   	lock.show()
   	lock.on('authenticated', function(authResult){
-  		localStorage.setItem('idToken', authResult.idToken);
-  		dispatch(lockSuccess(authResult.profile, authResult.token))
+			// Use the token in authResult to getProfile() and save it to localStorage
+		  lock.getProfile(authResult.idToken, function(error, profile) {
+		    if (error) {
+		      // Handle error
+		      return;
+		    }
+
+		    localStorage.setItem('idToken', authResult.idToken);
+		    localStorage.setItem('profile', JSON.stringify(profile));
+		    dispatch(lockSuccess(profile, authResult.token))
+		  });
   	})
   }
 }
@@ -88,6 +97,7 @@ export function logoutUser() {
   return dispatch => {
     dispatch(requestLogout())
     localStorage.removeItem('idToken')
+    localStorage.removeItem('profile')
     dispatch(receiveLogout())
   }
 }

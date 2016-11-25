@@ -89,7 +89,7 @@ class AvailableMatch extends Component {
   }
 
   render() {
-    const actions = [
+    const ConfirmActions = [
       <FlatButton
         label="Oui"
         primary={true}
@@ -125,7 +125,7 @@ class AvailableMatch extends Component {
         }/>
         <Dialog
           title="Confirmation"
-          actions={actions}
+          actions={ConfirmActions}
           modal={true}
           open={this.state.open}
         >

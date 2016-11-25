@@ -5,7 +5,8 @@ import { Login} from '../Login'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    logged: state.auth.isAuthenticated
+    logged: state.auth.isAuthenticated,
+    profile: state.auth.profile
   }
 }
 

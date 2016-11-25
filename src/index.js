@@ -45,7 +45,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
    			<IndexRoute component={LiveMatchsList}/>
-   			<Route path="available" component={AvailableMatchsList} onEnter={requireAuth}/>
+   			<Route path="available" component={AvailableMatchsList}/>
    			<Route path="my" component={MyMatchs} onEnter={requireAuth}/>
   		 	<Route path="login" component={SetLoggin} />
   		 	<Route path="setLoggin" component={SetLoggin}/>
