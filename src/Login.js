@@ -1,4 +1,5 @@
 import React from 'react'
+import { isTokenExpired } from './utils/jwtHelper'
 
 const GuestGreeting = (props) => {
   return (
@@ -21,6 +22,15 @@ const UserGreeting = (props) => {
 }
 
 export class Login extends React.Component {
+
+  componentWillMount(){
+    var token = localStorage.getItem("idToken")
+    if(token != undefined && !isTokenExpired(token)){
+      console.log("logged")
+    }else{
+      this.handleLogoutClick()
+    }
+  }
 
   render() {
     const { errorMessage, logged } = this.props
