@@ -26,15 +26,14 @@ export class Login extends React.Component {
   componentWillMount(){
     var token = localStorage.getItem("idToken")
     if(token != undefined && !isTokenExpired(token)){
-      console.log("logged")
     }else{
       this.handleLogoutClick()
     }
   }
 
   render() {
-    const { errorMessage, logged } = this.props
-    if (logged) {
+    var token = localStorage.getItem("idToken")
+    if(token != undefined && !isTokenExpired(token)){
       return <UserGreeting logout={this.handleLogoutClick.bind(this)}/>;
     }
     return <GuestGreeting login={this.handleClick.bind(this)} />;
