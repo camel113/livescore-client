@@ -48,3 +48,5 @@ export class Login extends React.Component {
     this.props.onLogoutClick()
   }
 }
+
+export default Login;
