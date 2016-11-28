@@ -16,6 +16,7 @@
     "dotenv": "^2.0.0",
     "flexbox-react": "^4.0.2",
     "flexboxgrid": "^6.3.1",
+    "jwt-decode": "^2.1.0",
     "material-ui": "^0.16.1",
     "moment": "^2.15.2",
     "react": "^15.3.2",

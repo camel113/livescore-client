@@ -9,6 +9,8 @@ import moment from 'moment'
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
+import { isTokenExpired } from './utils/jwtHelper'
+import {browserHistory} from 'react-router';
 
 import Match from './Match';
 
@@ -16,11 +18,16 @@ class AvailableMatch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {open:false,errorOpen:false,snackSuccessOpen:false,snackFailOpen:false};
+    this.state = {reportOpen:false,errorOpen:false,snackSuccessOpen:false,snackFailOpen:false,loginRequiredOpen:false};
   }
 
-  handleOpen(){
-    this.setState({open: true});
+  openReporter(){
+    var token = localStorage.getItem("idToken")
+    if(token != undefined && !isTokenExpired(token)){
+      this.setState({reportOpen: true});
+    }else{
+      this.setState({loginRequiredOpen: true});
+    }
   };
 
   _handleResponse(json){
@@ -32,7 +39,7 @@ class AvailableMatch extends Component {
   };
 
   handleConfirm(){
-    this.setState({open: false});
+    this.setState({reportOpen: false});
     
     console.log(this.props.matchId)
 
@@ -40,10 +47,11 @@ class AvailableMatch extends Component {
       method: 'PUT', 
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer '+localStorage.getItem('idToken')
       },
       body: JSON.stringify({
-        userId: "Adrien"
+        info: "subscribe"
       })
     })
     .then(response => response.json())
@@ -52,8 +60,16 @@ class AvailableMatch extends Component {
 
   };
 
+  showLoginRequired(){
+    this.setState({loginRequiredOpen: true});
+  }
+
+  hideLoginRequired(){
+    this.setState({loginRequiredOpen: false});
+  }
+
   handleCancel(){
-    this.setState({open: false});
+    this.setState({reportOpen: false});
   }
 
   closeError(){
@@ -66,10 +82,6 @@ class AvailableMatch extends Component {
 
   closeSuccess(){
     this.setState({errorOpen: false}); 
-  }
-
-  openError(){
-    this.setState({errorOpen: true});
   }
 
   openSnackSuccess(){
@@ -101,6 +113,18 @@ class AvailableMatch extends Component {
         onTouchTap={this.handleCancel.bind(this)}
       />,
     ];
+    const LoginActions = [
+      <FlatButton
+        label="Se loguer"
+        primary={true}
+        onTouchTap={()=>browserHistory.push('/login')}
+      />,
+      <FlatButton
+        label="Annuler"
+        primary={true}
+        onTouchTap={this.hideLoginRequired.bind(this)}
+      />,
+    ];
     const errorAction = <FlatButton label="Ok" primary={true} onTouchTap={this.closeError.bind(this)}/>
     return (
       <div>
@@ -117,7 +141,7 @@ class AvailableMatch extends Component {
                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                   targetOrigin={{horizontal: 'left', vertical: 'top'}}
                 >
-                  <MenuItem primaryText="Reporter" onTouchTap={this.handleOpen.bind(this)}/>
+                  <MenuItem primaryText="Reporter" onTouchTap={this.openReporter.bind(this)}/>
                 </IconMenu>
               </div>
             </Flexbox>
@@ -127,9 +151,17 @@ class AvailableMatch extends Component {
           title="Confirmation"
           actions={ConfirmActions}
           modal={true}
-          open={this.state.open}
+          open={this.state.reportOpen}
         >
           Confirmes-tu ton choix de reporter ce match? Tu seras le seul à pouvoir reporter le score de ce match en direct.
+        </Dialog>
+        <Dialog
+          title="Login"
+          actions={LoginActions}
+          modal={true}
+          open={this.state.loginRequiredOpen}
+        >
+          Tu dois être logué pour reporter un match.
         </Dialog>
         <Dialog
           title="Problème réseau"
