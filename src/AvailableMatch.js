@@ -11,6 +11,8 @@ import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import { isTokenExpired } from './utils/jwtHelper'
 import {browserHistory} from 'react-router';
+import { withRouter } from 'react-router';
+
 
 import Match from './Match';
 
@@ -113,7 +115,7 @@ class AvailableMatch extends Component {
       <FlatButton
         label="Se loguer"
         primary={true}
-        onTouchTap={()=>browserHistory.push('/login')}
+        onTouchTap={()=>this.props.router.push('/login')}
       />,
       <FlatButton
         label="Annuler"
@@ -184,4 +186,11 @@ class AvailableMatch extends Component {
   }
 }
 
-export default AvailableMatch;
+// PropTypes
+AvailableMatch.propTypes = {
+  router: React.PropTypes.shape({
+    push: React.PropTypes.func.isRequired
+  }).isRequired
+};
+
+export default withRouter(AvailableMatch);
