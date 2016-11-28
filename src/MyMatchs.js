@@ -5,7 +5,7 @@ import MyMatch from './MyMatch';
 class MyMatchs extends Component {
 
 	fetchData(){
-    this._executeQuery("http://127.0.0.1:8085/api/matchs/Adrien")
+    this._executeQuery("http://127.0.0.1:8085/api/mymatchs")
   }
 
   constructor(props) {
@@ -15,7 +15,13 @@ class MyMatchs extends Component {
 
   _executeQuery(query) {
     this.setState({ loaded: false });
-    fetch(query)
+    fetch(query, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer '+localStorage.getItem('idToken')
+      }
+    })
     .then(response => response.json())
     .then(json => this._handleResponse(json))
     .catch(error =>
@@ -41,6 +47,7 @@ class MyMatchs extends Component {
   render() {
     return (
       <section>
+        <h1>{this.state.message}</h1>
         <List>
       		{this.state.matchs.map((match) => <MyMatch key={match._id} time={match.date} homeTeam={match.homeTeam.name} awayTeam={match.awayTeam.name}/>)}
     		</List>
