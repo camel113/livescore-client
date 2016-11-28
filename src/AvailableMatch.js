@@ -32,13 +32,13 @@ class AvailableMatch extends Component {
 
   _handleResponse(json){
     if(json.updated == true){
-      this.openSnackSuccess()
+      this.showSnackSuccess()
     }else{
-      this.openSnackFail()
+      this.showSnackFail()
     }
   };
 
-  handleConfirm(){
+  handleReportConfirm(){
     this.setState({reportOpen: false});
     
     console.log(this.props.matchId)
@@ -56,9 +56,13 @@ class AvailableMatch extends Component {
     })
     .then(response => response.json())
     .then(json => this._handleResponse(json))
-    .catch(error => this.openError());
+    .catch(error => this.showError());
 
   };
+
+  hideReportConfirm(){
+    this.setState({reportOpen: false});
+  }
 
   showLoginRequired(){
     this.setState({loginRequiredOpen: true});
@@ -68,49 +72,41 @@ class AvailableMatch extends Component {
     this.setState({loginRequiredOpen: false});
   }
 
-  handleCancel(){
-    this.setState({reportOpen: false});
-  }
-
-  closeError(){
+  hideError(){
     this.setState({errorOpen: false}); 
   }
 
-  openError(){
+  showError(){
     this.setState({errorOpen: true});  
   }
 
-  closeSuccess(){
-    this.setState({errorOpen: false}); 
-  }
-
-  openSnackSuccess(){
+  showSnackSuccess(){
     this.setState({snackSuccessOpen: true});
   }
 
-  closeSnackSuccess(){
+  hideSnackSuccess(){
     this.setState({snackSuccessOpen: false});
   }
 
-  openSnackFail(){
+  showSnackFail(){
     this.setState({snackFailOpen: true});
   }
 
-  closeSnackFail(){
+  hideSnackFail(){
     this.setState({snackFailOpen: false});
   }
 
   render() {
-    const ConfirmActions = [
+    const ConfirmReportActions = [
       <FlatButton
         label="Oui"
         primary={true}
-        onTouchTap={this.handleConfirm.bind(this)}
+        onTouchTap={this.handleReportConfirm.bind(this)}
       />,
       <FlatButton
         label="Non"
         primary={true}
-        onTouchTap={this.handleCancel.bind(this)}
+        onTouchTap={this.hideReportConfirm.bind(this)}
       />,
     ];
     const LoginActions = [
@@ -125,7 +121,7 @@ class AvailableMatch extends Component {
         onTouchTap={this.hideLoginRequired.bind(this)}
       />,
     ];
-    const errorAction = <FlatButton label="Ok" primary={true} onTouchTap={this.closeError.bind(this)}/>
+    const errorAction = <FlatButton label="Ok" primary={true} onTouchTap={this.hideError.bind(this)}/>
     return (
       <div>
         <ListItem key={1} primaryText={
@@ -149,7 +145,7 @@ class AvailableMatch extends Component {
         }/>
         <Dialog
           title="Confirmation"
-          actions={ConfirmActions}
+          actions={ConfirmReportActions}
           modal={true}
           open={this.state.reportOpen}
         >
@@ -175,13 +171,13 @@ class AvailableMatch extends Component {
           open={this.state.snackSuccessOpen}
           message="Le match a été ajouté à tes matchs"
           autoHideDuration={4000}
-          onRequestClose={this.closeSnackSuccess.bind(this)}
+          onRequestClose={this.hideSnackSuccess.bind(this)}
         />
         <Snackbar
           open={this.state.snackFailOpen}
           message="Le match vient d'être choisi par un autre utilisateur"
           autoHideDuration={4000}
-          onRequestClose={this.closeSnackFail.bind(this)}
+          onRequestClose={this.hideSnackFail.bind(this)}
         />
       </div>
     );
