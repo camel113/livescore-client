@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
 import Divider from 'material-ui/Divider';
 import moment from 'moment'
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import MenuItem from 'material-ui/MenuItem';
+import Snackbar from 'material-ui/Snackbar';
 
 import Match from './Match';
 
@@ -9,7 +14,7 @@ class MyMatch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {duration: -1, live: false, futur:""};
+    this.state = {duration: -1, live: false, futur:"", snackGoalAddOpen:false};
   }
 
   componentDidMount() {
@@ -21,6 +26,45 @@ class MyMatch extends Component {
 
   componentWillUnmount(){
     clearInterval(this.timer);
+  }
+
+  addGoalToTeam(team){
+    console.log("%%%%")
+    fetch('http://127.0.0.1:8085/api/matchs/'+this.props.matchId, {
+      method: 'PUT', 
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer '+localStorage.getItem('idToken')
+      },
+      body: JSON.stringify({
+        info: "goal",
+        team: team
+      })
+    })
+    .then(response => response.json())
+    .then(json => this._handleAddGoalResponse(json))
+    .catch(error => this.showError(error));
+  }
+
+  _handleAddGoalResponse(json){
+    if(json.updated == true){
+      this.showSnackGoalAdd()
+    }else{
+      console.log("Fail")
+    }
+  };
+
+  showError(e){
+    console.log(e)
+  }
+
+  showSnackGoalAdd(){
+    this.setState({snackGoalAddOpen: true});
+  }
+
+  hideSnackGoalAdd(){
+    this.setState({snackGoalAddOpen: false});
   }
 
   computeTime(matchDate){
@@ -59,10 +103,28 @@ class MyMatch extends Component {
           </Flexbox>
           <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
           <Flexbox flexDirection="column">
-            <div>0</div>
-            <div>1</div>
+            <div>{this.props.homeTeamScore}</div>
+            <div>{this.props.awayTeamScore}</div>
           </Flexbox>
+          <Flexbox flexDirection="column" minWidth="30px">
+              <div>
+                <IconMenu
+                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                  anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                  targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                >
+                  <MenuItem primaryText={"+1 but "+this.props.homeTeam} onTouchTap={()=> this.addGoalToTeam(this.props.homeTeam)}/>
+                  <MenuItem primaryText={"+1 but "+this.props.awayTeam} onTouchTap={()=>console.log("touched")}/>
+                </IconMenu>
+              </div>
+            </Flexbox>
         </Flexbox>
+        <Snackbar
+          open={this.state.snackGoalAddOpen}
+          message="Le but a bien été sauvegardé"
+          autoHideDuration={4000}
+          onRequestClose={this.hideSnackGoalAdd.bind(this)}
+        />
       </div>
     );
   }
