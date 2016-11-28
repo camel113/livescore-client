@@ -12,19 +12,14 @@ import { createStore, applyMiddleware } from 'redux'
 import myApp from './reducers'
 import SetLoggin from './containers/SetLoggin'
 import IncrementButton from './containers/IncrementButton'
+import { isTokenExpired } from './utils/jwtHelper'
 
 import thunkMiddleware from 'redux-thunk'
 
 console.log(process.env)
 
-// validate authentication for private routes
-// const requireAuth = (nextState, replace) => {
-//   if (true) {
-//     replace({ pathname: '/login' })
-//   }
-// }
 const requireAuth = (nextState, replace) => {
-  if(!localStorage.getItem('idToken')){
+  if(!localStorage.getItem('idToken') || isTokenExpired(localStorage.getItem('idToken'))){
     replace({ pathname: '/login' })
   }
 }
