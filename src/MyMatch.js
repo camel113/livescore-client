@@ -12,6 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Router, Route, Link, browserHistory } from 'react-router'
 
 import Match from './Match';
 
@@ -19,7 +20,7 @@ class MyMatch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {duration: -1, live: false, futur:"", snackGoalAddOpen:false, goalFormOpen:false, dropdownOpen:false};
+    this.state = {duration: -1, live: false, futur:"", snackGoalAddOpen:false, goalFormOpen:false};
   }
 
   componentDidMount() {
@@ -31,12 +32,6 @@ class MyMatch extends Component {
 
   componentWillUnmount(){
     clearInterval(this.timer);
-  }
-
-  toggleActionsDropdown() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
   }
 
   toggleGoalForm(){
@@ -121,7 +116,6 @@ class MyMatch extends Component {
     const cancelGoalFormAction = <FlatButton label="Annuler" primary={true} onTouchTap={this.hideGoalForm.bind(this)}/>
     return (
       <div className="match">
-        <Button color="secondary">HELLO</Button>
         <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row">
           <Flexbox className="time-capsule" flexDirection="column" width="50px">
             <div className={(this.state.futur != "" ? 'visible' : 'hidden')}>{this.state.futur}</div>
@@ -133,16 +127,8 @@ class MyMatch extends Component {
             <div>{this.props.awayTeamScore}</div>
           </Flexbox>
           <Flexbox flexDirection="column" minWidth="30px">
-              <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleActionsDropdown.bind(this)}>
-                <DropdownToggle>
-                  D
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem onClick={()=> this.addGoalToTeam(this.props.homeTeam)}>{"+1 but "+this.props.homeTeam}</DropdownItem>
-                  <DropdownItem onClick={()=> console.log("Fais pas chier")}>{"+1 but "+this.props.awayTeam}</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </Flexbox>
+            <Link to={'/my/'+this.props.matchId}>{this.props.matchId}</Link>
+          </Flexbox>
         </Flexbox>
         <Snackbar
           open={this.state.snackGoalAddOpen}
@@ -150,16 +136,6 @@ class MyMatch extends Component {
           autoHideDuration={4000}
           onRequestClose={this.hideSnackGoalAdd.bind(this)}
         />
-        <Modal isOpen={this.state.goalFormOpen} toggle={this.toggleGoalForm.bind(this)} className={this.props.className}>
-          <ModalHeader toggle={this.toggleGoalForm}>Modal title</ModalHeader>
-          <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>Cancel</Button>
-          </ModalFooter>
-        </Modal>
       </div>
     );
   }
