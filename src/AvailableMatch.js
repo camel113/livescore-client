@@ -12,6 +12,7 @@ import Snackbar from 'material-ui/Snackbar';
 import { isTokenExpired } from './utils/jwtHelper'
 import {browserHistory} from 'react-router';
 import { withRouter } from 'react-router';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 import Match from './Match';
@@ -34,9 +35,9 @@ class AvailableMatch extends Component {
 
   _handleResponse(json){
     if(json.updated == true){
-      this.showSnackSuccess()
+      console.log("SNACK SUCESS")
     }else{
-      this.showSnackFail()
+      console.log("SNACK FAIL")
     }
   };
 
@@ -98,89 +99,68 @@ class AvailableMatch extends Component {
     this.setState({snackFailOpen: false});
   }
 
+  toggleReportModal(){
+    this.setState({
+      reportOpen: !this.state.reportOpen
+    });
+  }
+
+  toggleloginRequiredModal(){
+    this.setState({
+      loginRequiredOpen: !this.state.loginRequiredOpen
+    });
+  }
+
+  toggleErrorModal(){
+    this.setState({
+      errorOpen: !this.state.errorOpen
+    });
+  }
+
   render() {
-    const ConfirmReportActions = [
-      <FlatButton
-        label="Oui"
-        primary={true}
-        onTouchTap={this.handleReportConfirm.bind(this)}
-      />,
-      <FlatButton
-        label="Non"
-        primary={true}
-        onTouchTap={this.hideReportConfirm.bind(this)}
-      />,
-    ];
-    const LoginActions = [
-      <FlatButton
-        label="Se loguer"
-        primary={true}
-        onTouchTap={()=>this.props.router.push('/login')}
-      />,
-      <FlatButton
-        label="Annuler"
-        primary={true}
-        onTouchTap={this.hideLoginRequired.bind(this)}
-      />,
-    ];
-    const errorAction = <FlatButton label="Ok" primary={true} onTouchTap={this.hideError.bind(this)}/>
     return (
       <div>
-        <ListItem key={1} primaryText={
-          <Flexbox flexDirection="row">
-            <Flexbox className="time-capsule" flexDirection="column" minWidth="50px">
-              <Flexbox className="time">{moment(this.props.time).format("HH:mm")}</Flexbox>
-            </Flexbox>
-            <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
-            <Flexbox flexDirection="column" minWidth="30px">
-              <div>
-                <IconMenu
-                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                  anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                  targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                >
-                  <MenuItem primaryText="Reporter" onTouchTap={this.openReporter.bind(this)}/>
-                </IconMenu>
-              </div>
-            </Flexbox>
+        <Flexbox flexDirection="row">
+          <Flexbox className="time-capsule" flexDirection="column" minWidth="50px">
+            <Flexbox className="time">{moment(this.props.time).format("HH:mm")}</Flexbox>
           </Flexbox>
-        }/>
-        <Dialog
-          title="Confirmation"
-          actions={ConfirmReportActions}
-          modal={true}
-          open={this.state.reportOpen}
-        >
-          Confirmes-tu ton choix de reporter ce match? Tu seras le seul à pouvoir reporter le score de ce match en direct.
-        </Dialog>
-        <Dialog
-          title="Login"
-          actions={LoginActions}
-          modal={true}
-          open={this.state.loginRequiredOpen}
-        >
-          Tu dois être logué pour reporter un match.
-        </Dialog>
-        <Dialog
-          title="Problème réseau"
-          actions={errorAction}
-          modal={true}
-          open={this.state.errorOpen}
-        >
-          Il semblerait qu'il y ait un problème de connexion. Veuillez réessayer dans quelques minutes
-        </Dialog>
-        <Snackbar
-          open={this.state.snackSuccessOpen}
-          message="Le match a été ajouté à tes matchs"
-          autoHideDuration={4000}
-          onRequestClose={this.hideSnackSuccess.bind(this)}
-        />
-        <Snackbar
-          open={this.state.snackFailOpen}
-          message="Le match vient d'être choisi par un autre utilisateur"
-          autoHideDuration={4000}
-          onRequestClose={this.hideSnackFail.bind(this)}
-        />
+          <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
+          <Flexbox flexDirection="column" minWidth="30px">
+            <Button onClick={this.openReporter.bind(this)}/>
+          </Flexbox>
+        </Flexbox>
+        
+        <Modal isOpen={this.state.reportOpen} toggle={this.toggleReportModal.bind(this)} className={this.props.className}>
+          <ModalHeader toggle={this.toggleReportModal}>Confirmation</ModalHeader>
+          <ModalBody>
+            Confirmes-tu ton choix de reporter ce match? Tu seras le seul à pouvoir reporter le score de ce match en direct.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.handleReportConfirm.bind(this)}>Oui</Button>
+            <Button color="secondary" onClick={this.hideReportConfirm.bind(this)}>Non</Button>
+          </ModalFooter>
+        </Modal>
+
+        <Modal isOpen={this.state.loginRequiredOpen} toggle={this.toggleloginRequiredModal.bind(this)} className={this.props.className}>
+          <ModalHeader toggle={this.toggleloginRequiredModal}>Login requis</ModalHeader>
+          <ModalBody>
+            Tu dois être logué pour reporter un match.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={()=>this.props.router.push('/login')}>Se loguer</Button>
+            <Button color="secondary" onClick={this.hideLoginRequired.bind(this)}>Annuler</Button>
+          </ModalFooter>
+        </Modal>
+
+        <Modal isOpen={this.state.errorOpen} toggle={this.toggleErrorModal.bind(this)} className={this.props.className}>
+          <ModalHeader toggle={this.toggleErrorModal}>Login requis</ModalHeader>
+          <ModalBody>
+            Il semblerait qu'il y ait un problème de connexion. Veuillez réessayer dans quelques minutes
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.hideError.bind(this)}>Annuler</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }

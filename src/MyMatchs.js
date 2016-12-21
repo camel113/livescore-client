@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {List} from 'material-ui/List';
 import MyMatch from './MyMatch';
 
 class MyMatchs extends Component {
@@ -48,9 +47,9 @@ class MyMatchs extends Component {
     return (
       <section>
         <h1>{this.state.message}</h1>
-        <List>
+        <div>
       		{this.state.matchs.map((match) => <MyMatch key={match._id} matchId={match._id} time={match.date} homeTeam={match.homeTeam.name} awayTeam={match.awayTeam.name} homeTeamScore={match.homeTeam.score} awayTeamScore={match.awayTeam.score}/>)}
-    		</List>
+    		</div>
       </section>
     );
   }

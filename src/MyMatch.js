@@ -130,12 +130,6 @@ class MyMatch extends Component {
             <Link to={'/my/'+this.props.matchId}>{this.props.matchId}</Link>
           </Flexbox>
         </Flexbox>
-        <Snackbar
-          open={this.state.snackGoalAddOpen}
-          message="Le but a bien été sauvegardé"
-          autoHideDuration={4000}
-          onRequestClose={this.hideSnackGoalAdd.bind(this)}
-        />
       </div>
     );
   }

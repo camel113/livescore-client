@@ -42,7 +42,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
    			<IndexRoute component={LiveMatchsList}/>
    			<Route path="available" component={AvailableMatchsList} />
-        <Route path="my" component={MyMatchs}/>
+        <Route path="my" component={MyMatchs} onEnter={requireAuth}/>
         <Route path="/my/:matchId" component={MatchAdmin}/>
   		 	<Route path="login" component={SetLoggin} />
   		 	<Route path="setLoggin" component={SetLoggin}/>

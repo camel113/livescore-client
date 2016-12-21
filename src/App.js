@@ -9,13 +9,15 @@ import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {open: false};
+    this.state = {collapsed: true};
   }
   handleToggle(){
-    this.setState({open: !this.state.open});
+    this.setState({collapsed: !this.state.collapsed});
   }
   showOfflineWarning(){
 
@@ -25,19 +27,29 @@ class App extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider>
-        <div className="app">
-          <Drawer open={this.state.open} docked={false} onRequestChange={this.handleToggle.bind(this)}>
-            <MenuItem><Link to="/">Home</Link></MenuItem>
-            <Divider />
-            <Subheader>Reporter</Subheader>
-            <MenuItem><Link to="/available">Matchs disponibles</Link></MenuItem>
-            <MenuItem><Link to="/my">Mes matchs</Link></MenuItem>
-          </Drawer>
-          <AppBar title="Livescore" onLeftIconButtonTouchTap={this.handleToggle.bind(this)}/>
-          {this.props.children}
-        </div>
-      </MuiThemeProvider>
+       <div>
+        <Navbar color="faded" light>
+          <NavbarToggler className="float-sm-right hidden-lg-up collapsed" onClick={this.handleToggle.bind(this)} />
+          <Collapse className="navbar-toggleable-md" isOpen={!this.state.collapsed}>
+            <NavbarBrand href="/">reactstrap</NavbarBrand>
+            <Nav navbar>
+              <NavItem>
+                <NavLink href="/">Live</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/available/">Matchs disponibles</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/my">Mes matchs</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/Login">Login</NavLink>
+              </NavItem>
+            </Nav>
+          </Collapse>
+        </Navbar>
+        {this.props.children}
+      </div>
     );
   }
 }
