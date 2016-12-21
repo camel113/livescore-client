@@ -16,14 +16,14 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
 import Pencil from 'react-icons/lib/fa/pencil';
 
-
 import Match from './Match';
+import MatchTime from './MatchTime';
 
 class AvailableMatch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {reportOpen:false,errorOpen:false,snackSuccessOpen:false,snackFailOpen:false,loginRequiredOpen:false};
+    this.state = {reportOpen:false,errorOpen:false,snackSuccessOpen:false,snackFailOpen:false,loginRequiredOpen:false,live:false};
   }
 
   openReporter(){
@@ -118,14 +118,16 @@ class AvailableMatch extends Component {
       errorOpen: !this.state.errorOpen
     });
   }
+  
+  updateLive(status){
+    this.setState({live: status}); 
+  }
 
   render() {
     return (
       <ListGroupItem>
-        <Flexbox flexDirection="row">
-          <Flexbox className="time-capsule" flexDirection="column" minWidth="50px">
-            <Flexbox className="time">{moment(this.props.time).format("HH:mm")}</Flexbox>
-          </Flexbox>
+        <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row">
+          <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
           <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
           <Flexbox flexDirection="column" width="50px">
             <Button onClick={this.openReporter.bind(this)}><Pencil /></Button>
