@@ -7,6 +7,11 @@ import IconMenu from 'material-ui/IconMenu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem';
 import Snackbar from 'material-ui/Snackbar';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 import Match from './Match';
 
@@ -14,7 +19,7 @@ class MyMatch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {duration: -1, live: false, futur:"", snackGoalAddOpen:false};
+    this.state = {duration: -1, live: false, futur:"", snackGoalAddOpen:false, goalFormOpen:false, dropdownOpen:false};
   }
 
   componentDidMount() {
@@ -28,7 +33,22 @@ class MyMatch extends Component {
     clearInterval(this.timer);
   }
 
+  toggleActionsDropdown() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
+  toggleGoalForm(){
+    this.setState({
+      goalFormOpen: !this.state.goalFormOpen
+    });
+  }
   addGoalToTeam(team){
+    this.setState({goalFormOpen: true}); 
+  }
+
+  postGoalData(team){
     console.log("%%%%")
     fetch('http://127.0.0.1:8085/api/matchs/'+this.props.matchId, {
       method: 'PUT', 
@@ -67,6 +87,10 @@ class MyMatch extends Component {
     this.setState({snackGoalAddOpen: false});
   }
 
+  hideGoalForm(){
+    this.setState({goalFormOpen: false}); 
+  }
+
   computeTime(matchDate){
     var dateNow = Date.now();
     var minutes = moment(dateNow).diff(matchDate, 'minutes')
@@ -94,8 +118,10 @@ class MyMatch extends Component {
   }
 
   render() {
+    const cancelGoalFormAction = <FlatButton label="Annuler" primary={true} onTouchTap={this.hideGoalForm.bind(this)}/>
     return (
       <div className="match">
+        <Button color="secondary">HELLO</Button>
         <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row">
           <Flexbox className="time-capsule" flexDirection="column" width="50px">
             <div className={(this.state.futur != "" ? 'visible' : 'hidden')}>{this.state.futur}</div>
@@ -107,16 +133,15 @@ class MyMatch extends Component {
             <div>{this.props.awayTeamScore}</div>
           </Flexbox>
           <Flexbox flexDirection="column" minWidth="30px">
-              <div>
-                <IconMenu
-                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                  anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                  targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                >
-                  <MenuItem primaryText={"+1 but "+this.props.homeTeam} onTouchTap={()=> this.addGoalToTeam(this.props.homeTeam)}/>
-                  <MenuItem primaryText={"+1 but "+this.props.awayTeam} onTouchTap={()=>console.log("touched")}/>
-                </IconMenu>
-              </div>
+              <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleActionsDropdown.bind(this)}>
+                <DropdownToggle>
+                  D
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem onClick={()=> this.addGoalToTeam(this.props.homeTeam)}>{"+1 but "+this.props.homeTeam}</DropdownItem>
+                  <DropdownItem onClick={()=> console.log("Fais pas chier")}>{"+1 but "+this.props.awayTeam}</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
             </Flexbox>
         </Flexbox>
         <Snackbar
@@ -125,6 +150,16 @@ class MyMatch extends Component {
           autoHideDuration={4000}
           onRequestClose={this.hideSnackGoalAdd.bind(this)}
         />
+        <Modal isOpen={this.state.goalFormOpen} toggle={this.toggleGoalForm.bind(this)} className={this.props.className}>
+          <ModalHeader toggle={this.toggleGoalForm}>Modal title</ModalHeader>
+          <ModalBody>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }
