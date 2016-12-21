@@ -41,10 +41,8 @@ class AvailableMatchsList extends Component {
 
   render() {
     return (
-      <section>
-        <div>
+      <section id="available">
       		{this.state.matchs.map((league) => <AvailableMatchsSection key={league.region+league.league} region={league.region} league={league.league} matchs={league.matchs}/>)}
-    		</div>
       </section>
     );
   }

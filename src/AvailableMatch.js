@@ -13,6 +13,8 @@ import { isTokenExpired } from './utils/jwtHelper'
 import {browserHistory} from 'react-router';
 import { withRouter } from 'react-router';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
+import Pencil from 'react-icons/lib/fa/pencil';
 
 
 import Match from './Match';
@@ -119,17 +121,16 @@ class AvailableMatch extends Component {
 
   render() {
     return (
-      <div>
+      <ListGroupItem>
         <Flexbox flexDirection="row">
           <Flexbox className="time-capsule" flexDirection="column" minWidth="50px">
             <Flexbox className="time">{moment(this.props.time).format("HH:mm")}</Flexbox>
           </Flexbox>
           <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
-          <Flexbox flexDirection="column" minWidth="30px">
-            <Button onClick={this.openReporter.bind(this)}/>
+          <Flexbox flexDirection="column" width="50px">
+            <Button onClick={this.openReporter.bind(this)}><Pencil /></Button>
           </Flexbox>
         </Flexbox>
-        
         <Modal isOpen={this.state.reportOpen} toggle={this.toggleReportModal.bind(this)} className={this.props.className}>
           <ModalHeader toggle={this.toggleReportModal}>Confirmation</ModalHeader>
           <ModalBody>
@@ -161,7 +162,7 @@ class AvailableMatch extends Component {
             <Button color="secondary" onClick={this.hideError.bind(this)}>Annuler</Button>
           </ModalFooter>
         </Modal>
-      </div>
+      </ListGroupItem>
     );
   }
 }
