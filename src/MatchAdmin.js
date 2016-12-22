@@ -163,7 +163,7 @@ class MatchAdmin extends Component {
           <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
           <Button color="danger" onClick={this.checkIfUnscubscribeIsPossible.bind(this)}>Se désinscrire</Button>
         </Flexbox>
-        <Table>
+        <Table className="match-goals">
           <tbody>
             {this.state.goals.map((goal) => <tr key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td></tr>)}
           </tbody>

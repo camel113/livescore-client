@@ -1,22 +1,25 @@
 import React from 'react'
 import { isTokenExpired } from './utils/jwtHelper'
+import { Button } from 'reactstrap';
+import Flexbox from 'flexbox-react';
+
+const infoStyle = {
+  textAlign: 'center'
+};
 
 const GuestGreeting = (props) => {
   return (
     <div>
-      <button onClick={props.login}>
-        Login
-      </button>
+      <Flexbox minHeight="100px" style={infoStyle} justifyContent="center" alignItems="center">Vous devez être connecté pour reporter le score d'un ou plusieurs matchs</Flexbox>
+      <Flexbox justifyContent="center"><Button color="primary" onClick={props.login}>Se connecter</Button></Flexbox>
     </div>
   );
 }
 const UserGreeting = (props) => {
   return (
     <div>
-      <button onClick={props.logout}>
-        Logout
-      </button>
-      <h1>{JSON.parse(localStorage.getItem('profile')).name}</h1>
+      <Flexbox minHeight="100px" style={infoStyle} justifyContent="center" alignItems="center">Vous êtes actuellement connecté</Flexbox>
+      <Flexbox justifyContent="center"><Button color="danger" onClick={props.logout}>Se déconnecter</Button></Flexbox>
     </div>
   );
 }

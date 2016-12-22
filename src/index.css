@@ -10,9 +10,12 @@ body {
 }
 .match-general-info{
 	padding: 10px 10px 10px 0px;
+	border-bottom: 5px solid #eceeef; 
 }
 .match-actions{
 	margin-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 5px solid #eceeef; 
 }
 .modal-footer button:nth-child(2){
 	margin-left:5px; 
