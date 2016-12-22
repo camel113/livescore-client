@@ -18,8 +18,6 @@ import { isTokenExpired } from './utils/jwtHelper'
 
 import thunkMiddleware from 'redux-thunk'
 
-console.log(process.env)
-
 const requireAuth = (nextState, replace) => {
   if(!localStorage.getItem('idToken') || isTokenExpired(localStorage.getItem('idToken'))){
     replace({ pathname: '/login' })
@@ -42,7 +40,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
    			<IndexRoute component={LiveMatchsList}/>
-        <Route path="/:matchId" component={LiveMatchDetails}/>
+        <Route path="/live/:matchId" component={LiveMatchDetails}/>
    			<Route path="available" component={AvailableMatchsList} />
         <Route path="my" component={MyMatchs} onEnter={requireAuth}/>
         <Route path="/my/:matchId" component={MatchAdmin}/>

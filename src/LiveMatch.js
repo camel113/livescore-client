@@ -22,7 +22,7 @@ class LiveMatch extends Component {
 
   render() {
     return (
-      <div className="match" onClick={()=>this.props.router.push('/'+this.props.matchId)}>
+      <div className="match" onClick={()=>this.props.router.push('/live/'+this.props.matchId)}>
         <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row">
           <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
           <Match homeTeam={this.props.homeTeam.name} awayTeam={this.props.awayTeam.name}/>
