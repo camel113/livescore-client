@@ -7,6 +7,7 @@ import LiveMatchsList from './LiveMatchsList';
 import AvailableMatchsList from './AvailableMatchsList';
 import MyMatchs from './MyMatchs';
 import MatchAdmin from './MatchAdmin';
+import LiveMatchDetails from './LiveMatchDetails';
 
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -41,6 +42,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
    			<IndexRoute component={LiveMatchsList}/>
+        <Route path="/:matchId" component={LiveMatchDetails}/>
    			<Route path="available" component={AvailableMatchsList} />
         <Route path="my" component={MyMatchs} onEnter={requireAuth}/>
         <Route path="/my/:matchId" component={MatchAdmin}/>

@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
 import moment from 'moment'
+import Info from 'react-icons/lib/fa/info-circle';
+import { Button } from 'reactstrap';
+import { withRouter } from 'react-router';
 
 import Match from './Match';
 import MatchTime from './MatchTime';
+import Score from './Score';
 
 class LiveMatch extends Component {
 
@@ -18,13 +22,13 @@ class LiveMatch extends Component {
 
   render() {
     return (
-      <div className="match">
+      <div className="match" onClick={()=>this.props.router.push('/'+this.props.matchId)}>
         <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row">
           <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
-          <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
-          <Flexbox flexDirection="column">
-            <Flexbox>0</Flexbox>
-            <Flexbox>1</Flexbox>
+          <Match homeTeam={this.props.homeTeam.name} awayTeam={this.props.awayTeam.name}/>
+          <Score homeTeamScore={this.props.homeTeam.score} awayTeamScore={this.props.awayTeam.score} />
+          <Flexbox flexDirection="column" width="30px" alignItems="center" justifyContent="center">
+            <Info />
           </Flexbox>
         </Flexbox>
       </div>
@@ -32,4 +36,9 @@ class LiveMatch extends Component {
   }
 }
 
-export default LiveMatch;
+LiveMatch.propTypes = {
+  router: React.PropTypes.shape({
+    push: React.PropTypes.func.isRequired
+  }).isRequired
+};
+export default withRouter(LiveMatch);
