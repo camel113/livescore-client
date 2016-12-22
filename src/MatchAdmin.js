@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Table } from 'reactstrap';
 import { isTokenExpired } from './utils/jwtHelper'
-
+import moment from 'moment'
 
 import Match from './Match';
 import MatchTime from './MatchTime';
@@ -18,7 +18,7 @@ class MatchAdmin extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false,live:false,errorModalOpen:false,goals:[],unscubscribeModalOpen:false};
+    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false,live:false,errorModalOpen:false,goals:[],unscubscribeModalOpen:false,unscubscribeImpossibleModalOpen:false};
   }
 
   componentDidMount() {
@@ -48,6 +48,12 @@ class MatchAdmin extends Component {
   toggleUnscubscribeModal(){
     this.setState({
       unscubscribeModalOpen: !this.state.unscubscribeModalOpen
+    });
+  }
+
+  toggleUnscubscribeImpossibleModal(){
+    this.setState({
+      unscubscribeImpossibleModalOpen: !this.state.unscubscribeImpossibleModalOpen
     });
   }
 
@@ -96,6 +102,15 @@ class MatchAdmin extends Component {
     this.setState({goals: goals});
   }
 
+  checkIfUnscubscribeIsPossible(){
+    var minutes = moment(Date.now()).diff(this.state.time, 'minutes')
+    if(minutes < 0){
+      this.toggleUnscubscribeModal()
+    }else{
+      this.toggleUnscubscribeImpossibleModal()
+    }
+  }
+
   unsubscribe(){
     fetch('http://127.0.0.1:8085/api/matchs/'+this.props.params.matchId, {
       method: 'PUT', 
@@ -138,7 +153,7 @@ class MatchAdmin extends Component {
         </Flexbox>
         <Flexbox>
           <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
-          <Button color="secondary" onClick={this.toggleUnscubscribeModal.bind(this)}>Se désinscrire</Button>
+          <Button color="secondary" onClick={this.checkIfUnscubscribeIsPossible.bind(this)}>Se désinscrire</Button>
         </Flexbox>
         <Table>
           <tbody>
@@ -186,11 +201,20 @@ class MatchAdmin extends Component {
         <Modal isOpen={this.state.unscubscribeModalOpen} toggle={this.toggleUnscubscribeModal.bind(this)} className={this.props.className}>
           <ModalHeader toggle={this.toggleUnscubscribeModal.bind(this)}>Désinscription</ModalHeader>
           <ModalBody>
-            Etes-vous sur de ne plus vouloir reporter ce match?
+            Etes-vous sur de ne plus vouloir reporter ce match? <br/>Le match ne sera plus visible dans l'écran live public.
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.unsubscribe.bind(this)}>Oui</Button>
             <Button color="secondary" onClick={this.toggleUnscubscribeModal.bind(this)}>Non</Button>
+          </ModalFooter>
+        </Modal>
+        <Modal isOpen={this.state.unscubscribeImpossibleModalOpen} toggle={this.toggleUnscubscribeImpossibleModal.bind(this)} className={this.props.className}>
+          <ModalHeader toggle={this.toggleUnscubscribeImpossibleModal.bind(this)}>Impossible</ModalHeader>
+          <ModalBody>
+            Désolé il n'est pas possible de se désinscrire d'un match qui a déjà commencé ou qui est terminé.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.toggleUnscubscribeImpossibleModal.bind(this)}>Ok</Button>
           </ModalFooter>
         </Modal>
       </section>
