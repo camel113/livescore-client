@@ -18,7 +18,7 @@ class MatchAdmin extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false,live:false,errorModalOpen:false,goals:[]};
+    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false,live:false,errorModalOpen:false,goals:[],unscubscribeModalOpen:false};
   }
 
   componentDidMount() {
@@ -42,6 +42,12 @@ class MatchAdmin extends Component {
     });
     this.setState({
       errorModalOpen: !this.state.errorModalOpen
+    });
+  }
+
+  toggleUnscubscribeModal(){
+    this.setState({
+      unscubscribeModalOpen: !this.state.unscubscribeModalOpen
     });
   }
 
@@ -90,9 +96,34 @@ class MatchAdmin extends Component {
     this.setState({goals: goals});
   }
 
+  unsubscribe(){
+    fetch('http://127.0.0.1:8085/api/matchs/'+this.props.params.matchId, {
+      method: 'PUT', 
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer '+localStorage.getItem('idToken')
+      },
+      body: JSON.stringify({
+        info: "unsubscribe"
+      })
+    })
+    .then(response => response.json())
+    .then(json => this._handleUnsubscribeResponse(json))
+    .catch(error => this.toggleErrorModal());
+  }
+
+  _handleUnsubscribeResponse(json){
+    if(json.updated == true){
+      this.props.router.push('/')
+    }else{
+      this.toggleErrorModal()
+    }
+  }
+
   createTimeOptions(){
     var options = []
-    for (var i=0; i <= 90; i++) {
+    for (var i=1; i <= 90; i++) {
       options.push(<option key={i}>{i}</option>)
     }
     return options
@@ -107,7 +138,7 @@ class MatchAdmin extends Component {
         </Flexbox>
         <Flexbox>
           <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
-          <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>Se désinscrire</Button>
+          <Button color="secondary" onClick={this.toggleUnscubscribeModal.bind(this)}>Se désinscrire</Button>
         </Flexbox>
         <Table>
           <tbody>
@@ -150,6 +181,16 @@ class MatchAdmin extends Component {
           <ModalFooter>
             <Button color="primary" onClick={()=>this.props.router.push('/login')}>Login</Button>
             <Button color="secondary" onClick={this.toggleErrorModal.bind(this)}>Annuler</Button>
+          </ModalFooter>
+        </Modal>
+        <Modal isOpen={this.state.unscubscribeModalOpen} toggle={this.toggleUnscubscribeModal.bind(this)} className={this.props.className}>
+          <ModalHeader toggle={this.toggleUnscubscribeModal.bind(this)}>Désinscription</ModalHeader>
+          <ModalBody>
+            Etes-vous sur de ne plus vouloir reporter ce match?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.unsubscribe.bind(this)}>Oui</Button>
+            <Button color="secondary" onClick={this.toggleUnscubscribeModal.bind(this)}>Non</Button>
           </ModalFooter>
         </Modal>
       </section>
