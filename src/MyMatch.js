@@ -99,7 +99,7 @@ class MyMatch extends Component {
             <div>{this.props.awayTeamScore}</div>
           </Flexbox>
           <Flexbox flexDirection="column" minWidth="30px">
-            <Link to={'/my/'+this.props.matchId}>{this.props.matchId}</Link>
+            <Link to={'/my/'+this.props.matchId}>Link</Link>
           </Flexbox>
         </Flexbox>
       </div>

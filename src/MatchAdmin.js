@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
+import { isTokenExpired } from './utils/jwtHelper'
+
 
 import Match from './Match';
+import MatchTime from './MatchTime';
 
 class MatchAdmin extends Component {
 
@@ -15,7 +18,7 @@ class MatchAdmin extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false};
+    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false,live:false,errorModalOpen:false};
   }
 
   componentDidMount() {
@@ -24,7 +27,7 @@ class MatchAdmin extends Component {
 
   _handleResponse(data){
   	console.log(data)
-  	this.setState({homeT:data.homeTeam.name,awayT:data.awayTeam.name})
+  	this.setState({homeT:data.homeTeam.name,awayT:data.awayTeam.name,time:data.date})
   }
 
   toggleGoalForm(){
@@ -33,22 +36,105 @@ class MatchAdmin extends Component {
     });
   }
 
+  toggleErrorModal(){
+    this.setState({
+      goalFormOpen: !this.state.goalFormOpen
+    });
+    this.setState({
+      errorModalOpen: !this.state.errorModalOpen
+    });
+  }
+
+  updateLive(status){
+    this.setState({live: status}); 
+  }
+
+  postGoalData(){
+    var teamSelect = document.getElementById("teamSelect");
+    var teamSelected = teamSelect.options[teamSelect.selectedIndex].value;
+    fetch('http://127.0.0.1:8085/api/matchs/'+this.props.params.matchId, {
+      method: 'PUT', 
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer '+localStorage.getItem('idToken')
+      },
+      body: JSON.stringify({
+        info: "goal",
+        team: teamSelected
+      })
+    })
+    .then(response => response.json())
+    .then(json => this._handleAddGoalResponse(json))
+    .catch(error => this.toggleErrorModal());
+  }
+
+  _handleAddGoalResponse(json){
+    if(json.updated == true){
+      this.toggleGoalForm()
+    }else{
+      this.toggleErrorModal()
+    }
+  };
+
+  createTimeOptions(){
+    var options = []
+    for (var i=0; i <= 90; i++) {
+      options.push(<option key={i}>{i}</option>)
+    }
+    return options
+  }
+
   render() {
     return (
-      <Flexbox flexGrow={1} flexDirection="column" className="match-teams" minWidth="0px">
-        <Match homeTeam={this.state.homeT} awayTeam={this.state.awayT}/>
-        <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>+ Goal</Button>
+      <section>
+        <Flexbox flexGrow={1} flexDirection="row" className={(this.state.live ? 'live' : 'not-live')} minWidth="0px">
+          <MatchTime time={this.state.time} live={this.updateLive.bind(this)}/>
+          <Match homeTeam={this.state.homeT} awayTeam={this.state.awayT}/>
+        </Flexbox>
+        <Flexbox>
+          <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
+          <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>Se désinscrire</Button>
+        </Flexbox>
         <Modal isOpen={this.state.goalFormOpen} toggle={this.toggleGoalForm.bind(this)} className={this.props.className}>
-          <ModalHeader toggle={this.toggleGoalForm}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.toggleGoalForm.bind(this)}>Nouveau goal</ModalHeader>
           <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <Form>
+              <FormGroup>
+                <Label for="teamSelect">Equipe</Label>
+                <Input type="select" name="select" id="teamSelect">
+                  <option>{this.state.homeT}</option>
+                  <option>{this.state.awayT}</option>
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label for="timeSelect">Temps</Label>
+                <Input type="select" name="select" id="timeSelect">
+                  {this.createTimeOptions()}
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label for="playerName">Joueur</Label>
+                <Input type="text" name="playerName" id="playerName" placeholder="facultatif" />
+              </FormGroup>
+            </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>Do Something</Button>{' '}
+            <Button color="primary" onClick={this.postGoalData.bind(this)}>Ajouter</Button>
             <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>Cancel</Button>
           </ModalFooter>
         </Modal>
-      </Flexbox>
+        <Modal isOpen={this.state.errorModalOpen} toggle={this.toggleErrorModal.bind(this)} className={this.props.className}>
+          <ModalHeader toggle={this.toggleErrorModal.bind(this)}>Problème</ModalHeader>
+          <ModalBody>
+            Essayer de vous loguer à nouveau ou contacter l'administrateur de l'application.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={()=>this.props.router.push('/login')}>Login</Button>
+            <Button color="secondary" onClick={this.toggleErrorModal.bind(this)}>Annuler</Button>
+          </ModalFooter>
+        </Modal>
+      </section>
     );
   }
 }
