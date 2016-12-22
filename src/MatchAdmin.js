@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Table } from 'reactstrap';
 import { isTokenExpired } from './utils/jwtHelper'
 
 
@@ -18,7 +18,7 @@ class MatchAdmin extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false,live:false,errorModalOpen:false};
+    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false,live:false,errorModalOpen:false,goals:[]};
   }
 
   componentDidMount() {
@@ -27,7 +27,7 @@ class MatchAdmin extends Component {
 
   _handleResponse(data){
   	console.log(data)
-  	this.setState({homeT:data.homeTeam.name,awayT:data.awayTeam.name,time:data.date})
+  	this.setState({homeT:data.homeTeam.name,awayT:data.awayTeam.name,time:data.date,goals:data.goals})
   }
 
   toggleGoalForm(){
@@ -52,6 +52,10 @@ class MatchAdmin extends Component {
   postGoalData(){
     var teamSelect = document.getElementById("teamSelect");
     var teamSelected = teamSelect.options[teamSelect.selectedIndex].value;
+    var timeSelect = document.getElementById("timeSelect");
+    var timeSelected = timeSelect.options[timeSelect.selectedIndex].value;
+    var playerName = document.getElementById("playerName").value;
+    
     fetch('http://127.0.0.1:8085/api/matchs/'+this.props.params.matchId, {
       method: 'PUT', 
       headers: {
@@ -61,7 +65,9 @@ class MatchAdmin extends Component {
       },
       body: JSON.stringify({
         info: "goal",
-        team: teamSelected
+        team: teamSelected,
+        scorer: playerName,
+        time: timeSelected
       })
     })
     .then(response => response.json())
@@ -71,11 +77,18 @@ class MatchAdmin extends Component {
 
   _handleAddGoalResponse(json){
     if(json.updated == true){
+      console.log(json.goals)
+      this.updateGoalsList(json.goals)
       this.toggleGoalForm()
     }else{
       this.toggleErrorModal()
     }
   };
+
+  updateGoalsList(goals){
+    console.log(goals)
+    this.setState({goals: goals});
+  }
 
   createTimeOptions(){
     var options = []
@@ -96,6 +109,11 @@ class MatchAdmin extends Component {
           <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
           <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>Se désinscrire</Button>
         </Flexbox>
+        <Table>
+          <tbody>
+            {this.state.goals.map((goal) => <tr key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td></tr>)}
+          </tbody>
+        </Table>
         <Modal isOpen={this.state.goalFormOpen} toggle={this.toggleGoalForm.bind(this)} className={this.props.className}>
           <ModalHeader toggle={this.toggleGoalForm.bind(this)}>Nouveau goal</ModalHeader>
           <ModalBody>
@@ -115,7 +133,7 @@ class MatchAdmin extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="playerName">Joueur</Label>
-                <Input type="text" name="playerName" id="playerName" placeholder="facultatif" />
+                <Input type="text" name="playerName" id="playerName" placeholder="facultatif" maxLength="15" />
               </FormGroup>
             </Form>
           </ModalBody>
