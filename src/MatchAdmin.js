@@ -115,7 +115,7 @@ class MatchAdmin extends Component {
 
   _handleUnsubscribeResponse(json){
     if(json.updated == true){
-      this.props.router.push('/')
+      this.props.router.push('/live/'+this.props.params.matchId)
     }else{
       this.toggleErrorModal()
     }
