@@ -1,5 +1,5 @@
 .list{
-	padding:0 5px;
+	padding-right:5px;
 }
 .time, .teams>div{
 	padding: 0 4px;
@@ -17,6 +17,7 @@
 	font-weight: normal;
 	font-size: 1.2em;
 	text-align: center;
+	margin-top: 0.5rem;
 }
 .live{
 	border-left: 3px solid green;
