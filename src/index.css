@@ -11,3 +11,9 @@ body {
 .match-general-info{
 	padding: 10px 10px 10px 0px;
 }
+.match-actions{
+	margin-top: 10px;
+}
+.modal-footer button:nth-child(2){
+	margin-left:5px; 
+}

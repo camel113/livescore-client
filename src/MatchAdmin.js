@@ -3,9 +3,11 @@ import Flexbox from 'flexbox-react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Table } from 'reactstrap';
 import { isTokenExpired } from './utils/jwtHelper'
 import moment from 'moment'
+import classNames from 'classnames/bind';
 
 import Match from './Match';
 import MatchTime from './MatchTime';
+import Score from './Score';
 
 class MatchAdmin extends Component {
 
@@ -145,15 +147,21 @@ class MatchAdmin extends Component {
   }
 
   render() {
+    var matchInfoClass = classNames({
+      'live': this.state.live,
+      'not-live': !this.state.live,
+      'match-general-info': true
+    });
     return (
       <section>
-        <Flexbox flexGrow={1} flexDirection="row" className={(this.state.live ? 'live' : 'not-live')} minWidth="0px">
+        <Flexbox flexGrow={1} flexDirection="row" className={matchInfoClass} minWidth="0px">
           <MatchTime time={this.state.time} live={this.updateLive.bind(this)}/>
           <Match homeTeam={this.state.homeT} awayTeam={this.state.awayT}/>
+          <Score homeTeamScore={this.state.homeS} awayTeamScore={this.state.awayS} />
         </Flexbox>
-        <Flexbox>
-          <Button color="secondary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
-          <Button color="secondary" onClick={this.checkIfUnscubscribeIsPossible.bind(this)}>Se désinscrire</Button>
+        <Flexbox className="match-actions" justifyContent="space-around">
+          <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
+          <Button color="danger" onClick={this.checkIfUnscubscribeIsPossible.bind(this)}>Se désinscrire</Button>
         </Flexbox>
         <Table>
           <tbody>
@@ -161,7 +169,7 @@ class MatchAdmin extends Component {
           </tbody>
         </Table>
         <Modal isOpen={this.state.goalFormOpen} toggle={this.toggleGoalForm.bind(this)} className={this.props.className}>
-          <ModalHeader toggle={this.toggleGoalForm.bind(this)}>Nouveau goal</ModalHeader>
+          <ModalHeader>Nouveau goal</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup>
@@ -204,7 +212,7 @@ class MatchAdmin extends Component {
             Etes-vous sur de ne plus vouloir reporter ce match? <br/>Le match ne sera plus visible dans l'écran live public.
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.unsubscribe.bind(this)}>Oui</Button>
+            <Button color="danger" onClick={this.unsubscribe.bind(this)}>Oui</Button>
             <Button color="secondary" onClick={this.toggleUnscubscribeModal.bind(this)}>Non</Button>
           </ModalFooter>
         </Modal>

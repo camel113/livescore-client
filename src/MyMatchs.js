@@ -46,7 +46,6 @@ class MyMatchs extends Component {
   render() {
     return (
       <section>
-        <h1>{this.state.message}</h1>
         <div>
       		{this.state.matchs.map((match) => <MyMatch key={match._id} matchId={match._id} time={match.date} homeTeam={match.homeTeam.name} awayTeam={match.awayTeam.name} homeTeamScore={match.homeTeam.score} awayTeamScore={match.awayTeam.score}/>)}
     		</div>
