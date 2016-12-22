@@ -27,7 +27,7 @@ class LiveMatch extends Component {
           <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
           <Match homeTeam={this.props.homeTeam.name} awayTeam={this.props.awayTeam.name}/>
           <Score homeTeamScore={this.props.homeTeam.score} awayTeamScore={this.props.awayTeam.score} />
-          <Flexbox flexDirection="column" width="30px" alignItems="center" justifyContent="center">
+          <Flexbox flexDirection="column" minWidth="30px" alignItems="center" justifyContent="center">
             <Info />
           </Flexbox>
         </Flexbox>

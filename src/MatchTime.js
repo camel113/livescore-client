@@ -57,7 +57,7 @@ class LiveMatch extends Component {
 
   render() {
     return (
-      <Flexbox className="time-capsule" flexDirection="column" width="50px">
+      <Flexbox className="time-capsule" flexDirection="column" minWidth="50px">
         <div className={(this.state.futur != "" ? 'visible' : 'hidden')}>{this.state.futur}</div>
         <div className="time">{this.state.duration}</div>
       </Flexbox>

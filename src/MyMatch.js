@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
-import Divider from 'material-ui/Divider';
 import moment from 'moment'
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import MenuItem from 'material-ui/MenuItem';
-import Snackbar from 'material-ui/Snackbar';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Router, Route, Link, browserHistory } from 'react-router'
+import Pencil from 'react-icons/lib/fa/pencil';
+import { withRouter } from 'react-router';
 
 import Match from './Match';
 import MatchTime from './MatchTime';
+import Score from './Score';
 
 class MyMatch extends Component {
 
@@ -88,18 +82,14 @@ class MyMatch extends Component {
   }
 
   render() {
-    const cancelGoalFormAction = <FlatButton label="Annuler" primary={true} onTouchTap={this.hideGoalForm.bind(this)}/>
     return (
       <div className="match">
-        <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row">
+        <Flexbox minWidth="55px" className={(this.state.live ? 'live' : 'not-live')} flexDirection="row" onClick={()=>this.props.router.push('/my/'+this.props.matchId)}>
           <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
           <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
-          <Flexbox flexDirection="column">
-            <div>{this.props.homeTeamScore}</div>
-            <div>{this.props.awayTeamScore}</div>
-          </Flexbox>
-          <Flexbox flexDirection="column" minWidth="30px">
-            <Link to={'/my/'+this.props.matchId}>Link</Link>
+          <Score homeTeamScore={this.props.homeTeamScore} awayTeamScore={this.props.awayTeamScore} />
+          <Flexbox flexDirection="column" minWidth="30px" alignItems="center" justifyContent="center">
+            <Pencil />
           </Flexbox>
         </Flexbox>
       </div>
@@ -107,4 +97,9 @@ class MyMatch extends Component {
   }
 }
 
-export default MyMatch;
+MyMatch.propTypes = {
+  router: React.PropTypes.shape({
+    push: React.PropTypes.func.isRequired
+  }).isRequired
+};
+export default withRouter(MyMatch);

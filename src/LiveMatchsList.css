@@ -20,5 +20,12 @@
 	margin-top: 0.5rem;
 }
 .live{
-	border-left: 3px solid green;
+	border-left: 4px solid #C2F970;
+}
+.not-live{
+	border-left: 4px solid #fff;
+}
+.not-live .time-capsule{
+	font-size: 0.8em;
+	font-style: italic;
 }

@@ -14,7 +14,7 @@ import {browserHistory} from 'react-router';
 import { withRouter } from 'react-router';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
-import Pencil from 'react-icons/lib/fa/pencil';
+import Edit from 'react-icons/lib/fa/edit';
 
 import Match from './Match';
 import MatchTime from './MatchTime';
@@ -130,11 +130,11 @@ class AvailableMatch extends Component {
           <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
           <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
           <Flexbox flexDirection="column" width="50px">
-            <Button onClick={this.openReporter.bind(this)}><Pencil /></Button>
+            <Button onClick={this.openReporter.bind(this)}><Edit /></Button>
           </Flexbox>
         </Flexbox>
         <Modal isOpen={this.state.reportOpen} toggle={this.toggleReportModal.bind(this)} className={this.props.className}>
-          <ModalHeader toggle={this.toggleReportModal}>Confirmation</ModalHeader>
+          <ModalHeader>Confirmation</ModalHeader>
           <ModalBody>
             Confirmes-tu ton choix de reporter ce match? Tu seras le seul à pouvoir reporter le score de ce match en direct.
           </ModalBody>
