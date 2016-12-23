@@ -100,8 +100,13 @@ class AvailableMatch extends Component {
   }
 
   render() {
+    var listGroupItemStyle = {
+      paddingRight: "0",
+      paddingLeft: "7px",
+      border: "0"
+    }
     return (
-      <ListGroupItem>
+      <ListGroupItem style={listGroupItemStyle}>
         <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row">
           <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
           <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>

@@ -56,9 +56,15 @@ class LiveMatch extends Component {
   }
 
   render() {
+    var dateVisible = {
+      display:"block",
+    }
+    var dateInvisible = {
+      display:"none",
+    }
     return (
       <Flexbox className="time-capsule" flexDirection="column" minWidth="50px">
-        <div className={(this.state.futur != "" ? 'visible' : 'hidden')}>{this.state.futur}</div>
+        <div style={(this.state.futur != "" ? dateVisible : dateInvisible)}>{this.state.futur}</div>
         <div className="time">{this.state.duration}</div>
       </Flexbox>
     );
