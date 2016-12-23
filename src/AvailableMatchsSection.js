@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {ListItem} from 'material-ui/List';
 import AvailableMatch from './AvailableMatch';
 
 import { ListGroup, ListGroupItem, Collapse } from 'reactstrap';

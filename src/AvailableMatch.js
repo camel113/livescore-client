@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
-import {ListItem} from 'material-ui/List';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import moment from 'moment'
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import Snackbar from 'material-ui/Snackbar';
 import { isTokenExpired } from './utils/jwtHelper'
 import {browserHistory} from 'react-router';
 import { withRouter } from 'react-router';
@@ -23,7 +15,7 @@ class AvailableMatch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {reportOpen:false,errorOpen:false,snackSuccessOpen:false,snackFailOpen:false,loginRequiredOpen:false,live:false};
+    this.state = {reportOpen:false,errorOpen:false,loginRequiredOpen:false,live:false};
   }
 
   openReporter(){
@@ -83,22 +75,6 @@ class AvailableMatch extends Component {
 
   showError(){
     this.setState({errorOpen: true});  
-  }
-
-  showSnackSuccess(){
-    this.setState({snackSuccessOpen: true});
-  }
-
-  hideSnackSuccess(){
-    this.setState({snackSuccessOpen: false});
-  }
-
-  showSnackFail(){
-    this.setState({snackFailOpen: true});
-  }
-
-  hideSnackFail(){
-    this.setState({snackFailOpen: false});
   }
 
   toggleReportModal(){

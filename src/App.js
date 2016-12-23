@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import { Link} from 'react-router'
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
-
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
 class App extends Component {
@@ -19,19 +12,13 @@ class App extends Component {
   handleToggle(){
     this.setState({collapsed: !this.state.collapsed});
   }
-  showOfflineWarning(){
-
-  }
-  hideOfflineWarning(){
-    
-  }
   render() {
     return (
        <div>
         <Navbar color="faded" light>
           <NavbarToggler className="float-sm-right hidden-lg-up collapsed" onClick={this.handleToggle.bind(this)} />
           <Collapse className="navbar-toggleable-md" isOpen={!this.state.collapsed}>
-            <NavbarBrand href="/">reactstrap</NavbarBrand>
+            <NavbarBrand href="/">Footstats Live</NavbarBrand>
             <Nav navbar>
               <NavItem>
                 <NavLink href="/">Live</NavLink>
@@ -43,7 +30,7 @@ class App extends Component {
                 <NavLink href="/my">Mes matchs</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/Login">Login</NavLink>
+                <NavLink href="/Login">Connexion</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

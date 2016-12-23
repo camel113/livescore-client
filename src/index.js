@@ -24,10 +24,7 @@ const requireAuth = (nextState, replace) => {
   }
 }
 
-
 import './index.css';
-
-injectTapEventPlugin();
 
 let createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore)
 
