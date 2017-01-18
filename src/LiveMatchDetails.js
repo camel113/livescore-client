@@ -23,6 +23,14 @@ class LiveMatchDetails extends Component {
 
   componentDidMount() {
     this.fetchData()
+    this.timer = setInterval(
+      () => this.fetchData(),
+      60000
+    );
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.timer);
   }
 
   _handleResponse(data){

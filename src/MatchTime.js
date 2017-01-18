@@ -8,7 +8,7 @@ class LiveMatch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {duration: -1,futur:""};
+    this.state = {duration: "",futur:""};
   }
 
   componentDidMount() {

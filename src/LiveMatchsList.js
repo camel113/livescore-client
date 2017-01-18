@@ -18,7 +18,11 @@ class LiveMatchsList extends Component {
 
   componentDidMount() {
     this.fetchData()
-    setInterval(this.fetchData.bind(this), 600000);
+    this.timer = setInterval(this.fetchData.bind(this), 60000);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.timer);
   }
 
   fetchData(){

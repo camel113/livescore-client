@@ -29,7 +29,7 @@ class MatchAdmin extends Component {
 
   _handleResponse(data){
   	console.log(data)
-  	this.setState({homeT:data.homeTeam.name,awayT:data.awayTeam.name,time:data.date,goals:data.goals})
+  	this.setState({homeT:data.homeTeam.name,homeS:data.homeTeam.score,awayT:data.awayTeam.name,awayS:data.awayTeam.score,time:data.date,goals:data.goals})
   }
 
   toggleGoalForm(){
@@ -91,8 +91,9 @@ class MatchAdmin extends Component {
 
   _handleAddGoalResponse(json){
     if(json.updated == true){
-      console.log(json.goals)
+      console.log(json)
       this.updateGoalsList(json.goals)
+      this.updateScoreInfo(json.homeTeamScore,json.awayTeamScore)
       this.toggleGoalForm()
     }else{
       this.toggleErrorModal()
@@ -100,8 +101,11 @@ class MatchAdmin extends Component {
   };
 
   updateGoalsList(goals){
-    console.log(goals)
     this.setState({goals: goals});
+  }
+
+  updateScoreInfo(home,away){
+    this.setState({homeS: home,awayS: away});
   }
 
   checkIfUnscubscribeIsPossible(){
