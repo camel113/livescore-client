@@ -89,6 +89,34 @@ class MatchAdmin extends Component {
     .catch(error => this.toggleErrorModal());
   }
 
+  removeGoal(team){
+    fetch('http://127.0.0.1:8085/api/matchs/'+this.props.params.matchId, {
+      method: 'DELETE', 
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer '+localStorage.getItem('idToken')
+      },
+      body: JSON.stringify({
+        info: "ungoal",
+        team: team
+      })
+    })
+    .then(response => response.json())
+    .then(json => this._handleRemoveGoalResponse(json))
+    .catch(error => this.toggleErrorModal());
+  }
+
+  _handleRemoveGoalResponse(json){
+    if(json.updated == true){
+      console.log(json)
+      this.updateGoalsList(json.goals)
+      this.updateScoreInfo(json.homeTeamScore,json.awayTeamScore)
+    }else{
+      this.toggleErrorModal()
+    }
+  };
+
   _handleAddGoalResponse(json){
     if(json.updated == true){
       console.log(json)
@@ -169,7 +197,13 @@ class MatchAdmin extends Component {
         </Flexbox>
         <Table className="match-goals">
           <tbody>
-            {this.state.goals.map((goal) => <tr key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td></tr>)}
+            {this.state.goals.map(function(goal,index){
+              if(index == this.state.goals.length-1){
+                return <tr onClick={() => this.removeGoal(goal.team)} key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td></tr>
+              }else{
+                return <tr key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td></tr>
+              }
+            },this)}
           </tbody>
         </Table>
         <Modal isOpen={this.state.goalFormOpen} toggle={this.toggleGoalForm.bind(this)} className={this.props.className}>
