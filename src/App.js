@@ -14,11 +14,11 @@ class App extends Component {
   render() {
     return (
        <div>
-        <Navbar color="faded" light>
-          <NavbarToggler className="float-sm-right hidden-lg-up collapsed" onClick={this.handleToggle.bind(this)} />
-          <Collapse className="navbar-toggleable-md" isOpen={!this.state.collapsed}>
-            <NavbarBrand href="/">Footstats Live</NavbarBrand>
-            <Nav navbar>
+        <Navbar color="faded" light toggleable>
+          <NavbarToggler right onClick={this.handleToggle.bind(this)} />
+          <NavbarBrand href="/">Footstats Live</NavbarBrand>
+          <Collapse navbar isOpen={!this.state.collapsed}>
+            <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink href="/">Live</NavLink>
               </NavItem>
