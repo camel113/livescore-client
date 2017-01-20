@@ -4,10 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, La
 import { isTokenExpired } from './utils/jwtHelper'
 import moment from 'moment'
 import classNames from 'classnames/bind';
-
-import Match from './Match';
-import MatchTime from './MatchTime';
-import Score from './Score';
+import MatchInfoBox from './MatchInfoBox'
 
 class MatchAdmin extends Component {
 
@@ -57,10 +54,6 @@ class MatchAdmin extends Component {
     this.setState({
       unscubscribeImpossibleModalOpen: !this.state.unscubscribeImpossibleModalOpen
     });
-  }
-
-  updateLive(status){
-    this.setState({live: status}); 
   }
 
   postGoalData(){
@@ -189,24 +182,9 @@ class MatchAdmin extends Component {
       paddingTop: "10px",
       paddingBottom: "10px"
     }
-    var style = {
-      matchBox: {
-        padding: "10px 10px 10px 0px"
-      },
-      live:{
-        "borderLeft": "4px solid #C2F970"
-      },
-      notLive:{
-        borderLeft: "4px solid #fff"
-      }
-    }
     return (
       <section>
-        <Flexbox flexGrow={1} flexDirection="row" minWidth="0px" style={this.state.live ? Object.assign(style.matchBox, style.live) : Object.assign(style.matchBox, style.notLive)}>
-          <MatchTime time={this.state.time} live={this.updateLive.bind(this)}/>
-          <Match homeTeam={this.state.homeT} awayTeam={this.state.awayT}/>
-          <Score homeTeamScore={this.state.homeS} awayTeamScore={this.state.awayS} />
-        </Flexbox>
+        <MatchInfoBox time={this.state.time} homeT={this.state.homeT} awayT={this.state.awayT} homeS={this.state.homeS} awayS={this.state.awayS} />
         <Flexbox style={actionsAreaStyle} justifyContent="space-around">
           <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
           <Button color="danger" onClick={this.checkIfUnscubscribeIsPossible.bind(this)}>Se désinscrire</Button>
