@@ -5,6 +5,7 @@ import { isTokenExpired } from './utils/jwtHelper'
 import moment from 'moment'
 import classNames from 'classnames/bind';
 import MatchInfoBox from './MatchInfoBox'
+import Trash from 'react-icons/lib/fa/trash';
 
 class MatchAdmin extends Component {
 
@@ -17,7 +18,7 @@ class MatchAdmin extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false,live:false,errorModalOpen:false,goals:[],unscubscribeModalOpen:false,unscubscribeImpossibleModalOpen:false};
+    this.state = {matchId:"",homeT:"",awayT:"",homeS:0,awayS:0,date:"",time:"",goalFormOpen:false,live:false,errorModalOpen:false,goals:[],unscubscribeModalOpen:false,unscubscribeImpossibleModalOpen:false,removeGoalModalOpen:false};
   }
 
   componentDidMount() {
@@ -41,6 +42,12 @@ class MatchAdmin extends Component {
     });
     this.setState({
       errorModalOpen: !this.state.errorModalOpen
+    });
+  }
+
+  toggleRemoveGoalModal(){
+    this.setState({
+      removeGoalModalOpen: !this.state.removeGoalModalOpen
     });
   }
 
@@ -82,7 +89,7 @@ class MatchAdmin extends Component {
     .catch(error => this.toggleErrorModal());
   }
 
-  removeGoal(team){
+  removeGoal(){
     fetch('http://127.0.0.1:8085/api/matchs/'+this.props.params.matchId, {
       method: 'DELETE', 
       headers: {
@@ -91,8 +98,7 @@ class MatchAdmin extends Component {
         'authorization': 'Bearer '+localStorage.getItem('idToken')
       },
       body: JSON.stringify({
-        info: "ungoal",
-        team: team
+        info: "ungoal"
       })
     })
     .then(response => response.json())
@@ -105,6 +111,7 @@ class MatchAdmin extends Component {
       console.log(json)
       this.updateGoalsList(json.goals)
       this.updateScoreInfo(json.homeTeamScore,json.awayTeamScore)
+      this.toggleRemoveGoalModal()
     }else{
       this.toggleErrorModal()
     }
@@ -177,15 +184,22 @@ class MatchAdmin extends Component {
       'not-live': !this.state.live,
       'match-general-info': true
     });
-    var actionsAreaStyle = {
-      backgroundColor: "#EDF2F4",
-      paddingTop: "10px",
-      paddingBottom: "10px"
+    var style = {
+      trashContainer: {
+        textAlign: "right"
+      },
+      actionsAreaStyle: {
+        backgroundColor: "#EDF2F4",
+        paddingTop: "10px",
+        paddingBottom: "10px"
+      }
+
     }
+    var lastGoal = null
     return (
       <section>
         <MatchInfoBox time={this.state.time} homeT={this.state.homeT} awayT={this.state.awayT} homeS={this.state.homeS} awayS={this.state.awayS} />
-        <Flexbox style={actionsAreaStyle} justifyContent="space-around">
+        <Flexbox style={style.actionsAreaStyle} justifyContent="space-around">
           <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
           <Button color="danger" onClick={this.checkIfUnscubscribeIsPossible.bind(this)}>Se désinscrire</Button>
         </Flexbox>
@@ -193,9 +207,10 @@ class MatchAdmin extends Component {
           <tbody>
             {this.state.goals.map(function(goal,index){
               if(index == this.state.goals.length-1){
-                return <tr onClick={() => this.removeGoal(goal.team)} key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td></tr>
+                lastGoal = goal
+                return <tr key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td><td style={style.trashContainer} onClick={this.toggleRemoveGoalModal.bind(this)}><Trash/></td></tr>
               }else{
-                return <tr key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td></tr>
+                return <tr key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td><td></td></tr>
               }
             },this)}
           </tbody>
@@ -255,6 +270,16 @@ class MatchAdmin extends Component {
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggleUnscubscribeImpossibleModal.bind(this)}>Ok</Button>
+          </ModalFooter>
+        </Modal>
+        <Modal isOpen={this.state.removeGoalModalOpen} toggle={this.toggleRemoveGoalModal.bind(this)} className={this.props.className}>
+          <ModalHeader toggle={this.toggleRemoveGoalModal.bind(this)}>Effacer le dernier goal</ModalHeader>
+          <ModalBody>
+            Es-tu sûr de vouloir effacer le dernier goal inscrit?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={this.removeGoal.bind(this)}>Oui</Button>
+            <Button color="secondary" onClick={this.toggleRemoveGoalModal.bind(this)}>Non</Button>
           </ModalFooter>
         </Modal>
       </section>
