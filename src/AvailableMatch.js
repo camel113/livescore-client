@@ -103,15 +103,18 @@ class AvailableMatch extends Component {
     var listGroupItemStyle = {
       paddingRight: "0",
       paddingLeft: "7px",
-      border: "0"
+      border: "none"
+    }
+    var subscribeButtonStyle = {
+      textAlign:"right"
     }
     return (
       <ListGroupItem style={listGroupItemStyle}>
-        <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row">
+        <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row" width="100%">
           <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
           <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
-          <Flexbox flexDirection="column" width="50px">
-            <Button onClick={this.openReporter.bind(this)}><Edit /></Button>
+          <Flexbox flexDirection="column" width="50px" style={subscribeButtonStyle}>
+            <a onClick={this.openReporter.bind(this)}><Edit /></a>
           </Flexbox>
         </Flexbox>
         <Modal isOpen={this.state.reportOpen} toggle={this.toggleReportModal.bind(this)} className={this.props.className}>
@@ -126,7 +129,7 @@ class AvailableMatch extends Component {
         </Modal>
 
         <Modal isOpen={this.state.loginRequiredOpen} toggle={this.toggleloginRequiredModal.bind(this)} className={this.props.className}>
-          <ModalHeader toggle={this.toggleloginRequiredModal}>Login requis</ModalHeader>
+          <ModalHeader toggle={this.hideLoginRequired.bind(this)}>Login requis</ModalHeader>
           <ModalBody>
             Tu dois être logué pour reporter un match.
           </ModalBody>

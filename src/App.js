@@ -12,10 +12,16 @@ class App extends Component {
     this.setState({collapsed: !this.state.collapsed});
   }
   render() {
+    var buttonStyle = {
+      border: "none"
+    }
+    var navbarStyle = {
+      backgroundColor: "#2B2D42"
+    }
     return (
        <div>
-        <Navbar color="faded" light toggleable>
-          <NavbarToggler right onClick={this.handleToggle.bind(this)} />
+        <Navbar style={navbarStyle}  light toggleable>
+          <NavbarToggler style={buttonStyle} right onClick={this.handleToggle.bind(this)} />
           <NavbarBrand href="/">Footstats Live</NavbarBrand>
           <Collapse navbar isOpen={!this.state.collapsed}>
             <Nav className="ml-auto" navbar>

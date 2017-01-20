@@ -184,14 +184,30 @@ class MatchAdmin extends Component {
       'not-live': !this.state.live,
       'match-general-info': true
     });
+    var actionsAreaStyle = {
+      backgroundColor: "#EDF2F4",
+      paddingTop: "10px",
+      paddingBottom: "10px"
+    }
+    var style = {
+      matchBox: {
+        padding: "10px 10px 10px 0px"
+      },
+      live:{
+        "borderLeft": "4px solid #C2F970"
+      },
+      notLive:{
+        borderLeft: "4px solid #fff"
+      }
+    }
     return (
       <section>
-        <Flexbox flexGrow={1} flexDirection="row" className={matchInfoClass} minWidth="0px">
+        <Flexbox flexGrow={1} flexDirection="row" minWidth="0px" style={this.state.live ? Object.assign(style.matchBox, style.live) : Object.assign(style.matchBox, style.notLive)}>
           <MatchTime time={this.state.time} live={this.updateLive.bind(this)}/>
           <Match homeTeam={this.state.homeT} awayTeam={this.state.awayT}/>
           <Score homeTeamScore={this.state.homeS} awayTeamScore={this.state.awayS} />
         </Flexbox>
-        <Flexbox className="match-actions" justifyContent="space-around">
+        <Flexbox style={actionsAreaStyle} justifyContent="space-around">
           <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
           <Button color="danger" onClick={this.checkIfUnscubscribeIsPossible.bind(this)}>Se désinscrire</Button>
         </Flexbox>
