@@ -22,7 +22,7 @@ class App extends Component {
        <div>
         <Navbar style={navbarStyle}  inverse toggleable>
           <NavbarToggler style={buttonStyle} right onClick={this.handleToggle.bind(this)} />
-          <NavbarBrand href="/">Footstats Live</NavbarBrand>
+          <NavbarBrand tag={Link} to="/">Footstats Live</NavbarBrand>
           <Collapse navbar isOpen={!this.state.collapsed}>
             <Nav className="ml-auto" navbar>
               <NavItem>
