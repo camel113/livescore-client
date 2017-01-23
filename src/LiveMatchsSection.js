@@ -6,7 +6,7 @@ class LiveMatchsSection extends Component {
   	var sectionTitleStyle = {
       backgroundColor: "#8D99AE",
       margin: "0",
-      padding: "10px",
+      padding: "5px",
       color: "#EDF2F4"
     }
     return (
