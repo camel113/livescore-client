@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import Flexbox from 'flexbox-react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Table } from 'reactstrap';
 import { isTokenExpired } from './utils/jwtHelper'
-
 import MatchInfoBox from './MatchInfoBox'
+import ShareLive from './ShareLive';
+
+import {ShareButtons,ShareCounts,generateShareIcon} from 'react-share';
+const {FacebookShareButton,TwitterShareButton} = ShareButtons;
+const FacebookIcon = generateShareIcon('facebook');
+const TwitterIcon = generateShareIcon('twitter');
+
+import Helmet from "react-helmet";
 
 class LiveMatchDetails extends Component {
 
@@ -46,12 +53,29 @@ class LiveMatchDetails extends Component {
     var style = {
       table: {
         borderTop: "5px solid #eceeef"
+      },
+      socialContainer: {
+        backgroundColor: "#EF233C",
+        padding: "5px 0",
+        color: "#fff"
+      },
+      facebookIcon: {
+        marginRight: "7px"
+      },
+      twitterIcon: {
+        marginLeft: "7px"
       }
     }
     return (
       <section>
+        <Helmet
+          meta={[
+            {property: "og:title", content: "Footstats LIVE"}
+          ]}
+        />
         <MatchInfoBox time={this.state.time} homeT={this.state.homeT} awayT={this.state.awayT} homeS={this.state.homeS} awayS={this.state.awayS} />
-        <Table style={style.table}>
+        <ShareLive matchId={this.props.params.matchId}/>
+        <Table>
           <tbody>
             {this.state.goals.map((goal) => <tr key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td></tr>)}
           </tbody>

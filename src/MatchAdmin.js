@@ -6,6 +6,7 @@ import moment from 'moment'
 import classNames from 'classnames/bind';
 import MatchInfoBox from './MatchInfoBox'
 import Trash from 'react-icons/lib/fa/trash';
+import ShareLive from './ShareLive';
 
 class MatchAdmin extends Component {
 
@@ -193,12 +194,12 @@ class MatchAdmin extends Component {
         paddingTop: "10px",
         paddingBottom: "10px"
       }
-
     }
     var lastGoal = null
     return (
       <section>
         <MatchInfoBox time={this.state.time} homeT={this.state.homeT} awayT={this.state.awayT} homeS={this.state.homeS} awayS={this.state.awayS} />
+        <ShareLive matchId={this.props.params.matchId}/>
         <Flexbox style={style.actionsAreaStyle} justifyContent="space-around">
           <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
           <Button color="danger" onClick={this.checkIfUnscubscribeIsPossible.bind(this)}>Se désinscrire</Button>
