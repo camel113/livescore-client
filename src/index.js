@@ -40,7 +40,7 @@ ReactDOM.render(
         <Route path="/live/:matchId" component={LiveMatchDetails}/>
    			<Route path="available" component={AvailableMatchsList} />
         <Route path="my" component={MyMatchs} onEnter={requireAuth}/>
-        <Route path="/my/:matchId" component={MatchAdmin}/>
+        <Route path="my/:matchId" component={MatchAdmin}/>
   		 	<Route path="login" component={SetLoggin} />
   		 	<Route path="setLoggin" component={SetLoggin}/>
         <Route path="inc" component={IncrementButton}/>

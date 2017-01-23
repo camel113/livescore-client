@@ -37,7 +37,7 @@ class AvailableMatchsSection extends Component {
     return (
     	<ListGroup>
         <ListGroupItem style={listGroupItemStyle} onClick={this.toggle}>
-            <div alignItems="center" style={fullWidthContainerStyle}>{this.props.region+" "+this.props.league+"e ligue"} {button}</div>
+            <div style={fullWidthContainerStyle}>{this.props.region+" "+this.props.league+"e ligue"} {button}</div>
             <Collapse style={fullWidthContainerStyle} isOpen={this.state.collapse}>
               	<ListGroup >
             	   	{this.props.matchs.map((match) => <AvailableMatch key={match._id} time={match.date} matchId={match._id} homeTeam={match.homeTeam.name} awayTeam={match.awayTeam.name}/>)}
