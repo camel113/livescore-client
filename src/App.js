@@ -26,16 +26,16 @@ class App extends Component {
           <Collapse navbar isOpen={!this.state.collapsed}>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink onClick={this.handleToggle.bind(this)} tag={Link} onlyActiveOnIndex activeClassName="active" to="/">Live</NavLink>
+                <NavLink tag={Link} onlyActiveOnIndex activeClassName="active" to="/">Live</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink onClick={this.handleToggle.bind(this)} tag={Link} activeClassName="active" to="available">Matchs disponibles</NavLink>
+                <NavLink tag={Link} activeClassName="active" to="available">Matchs disponibles</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink onClick={this.handleToggle.bind(this)} tag={Link} activeClassName="active" to="/my">Mes matchs</NavLink>
+                <NavLink tag={Link} activeClassName="active" to="/my">Mes matchs</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink onClick={this.handleToggle.bind(this)} tag={Link} activeClassName="active" to="Login">Connexion</NavLink>
+                <NavLink tag={Link} activeClassName="active" to="Login">Connexion</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
