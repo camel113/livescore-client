@@ -4,7 +4,7 @@ import AvailableMatchsSection from './AvailableMatchsSection';
 class AvailableMatchsList extends Component {
 
 	fetchData(){
-    this._executeQuery("http://127.0.0.1:8085/api/availablematchs")
+    this._executeQuery("http://api.footstats.ch/api/availablematchs")
   }
 
   constructor(props) {

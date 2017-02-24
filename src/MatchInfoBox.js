@@ -8,7 +8,7 @@ import Score from './Score';
 class MatchInfoBox extends Component {
 
 	fetchData(){
-    fetch("http://127.0.0.1:8085/api/matchs/"+this.props.params.matchId)
+    fetch("http://api.footstats.ch/api/matchs/"+this.props.params.matchId)
     .then(response => response.json())
     .then(json => this._handleResponse(json))
     .catch(error => console.log("error "+error));

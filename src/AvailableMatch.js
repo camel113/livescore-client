@@ -40,7 +40,7 @@ class AvailableMatch extends Component {
     
     console.log(this.props.matchId)
 
-    fetch('http://127.0.0.1:8085/api/matchs/'+this.props.matchId, {
+    fetch('http://api.footstats.ch/api/matchs/'+this.props.matchId, {
       method: 'PUT', 
       headers: {
         'Accept': 'application/json',
