@@ -26,7 +26,7 @@ class LiveMatchsList extends Component {
   }
 
   fetchData(){
-    this._executeQuery("http://127.0.0.1:8085/api/livematchs")
+    this._executeQuery("http://api.footstats.ch/api/livematchs")
   }
 
   _executeQuery(query) {
@@ -44,7 +44,6 @@ class LiveMatchsList extends Component {
 
   _handleResponse(response) {
     var data = response
-    console.log("console.log")
     console.log(data)
     // data.map((match) => <LiveMatch/>);
     this.setState({

@@ -4,7 +4,7 @@ import MyMatch from './MyMatch';
 class MyMatchs extends Component {
 
 	fetchData(){
-    this._executeQuery("http://127.0.0.1:8085/api/mymatchs")
+    this._executeQuery("http://api.footstats.ch/api/mymatchs")
   }
 
   constructor(props) {

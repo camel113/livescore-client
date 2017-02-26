@@ -32,10 +32,10 @@ class ShareLive extends Component {
           Partagez ce live avec vos amis!
         </Flexbox>
         <Flexbox flexDirection="row" justifyContent="center">
-          <FacebookShareButton style={style.facebookIcon} url={"http://localhost:3000/live/"+this.props.matchId} title="Partager le live sur Facebook">
+          <FacebookShareButton style={style.facebookIcon} url={"http://live.footstats.ch/live/"+this.props.matchId} title="Partager le live sur Facebook">
             <FacebookIcon size={38} round />
           </FacebookShareButton>
-          <TwitterShareButton style={style.twitterIcon} url={"http://localhost:3000/live/"+this.props.matchId} title="Partager le live sur Twitter">
+          <TwitterShareButton style={style.twitterIcon} url={"http://live.footstats.ch/live/"+this.props.matchId} title="Partager le live sur Twitter">
             <TwitterIcon size={38} round />
           </TwitterShareButton>
         </Flexbox>
