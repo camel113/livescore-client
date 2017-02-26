@@ -74,7 +74,7 @@ class LiveMatchDetails extends Component {
           ]}
         />
         <MatchInfoBox time={this.state.time} homeT={this.state.homeT} awayT={this.state.awayT} homeS={this.state.homeS} awayS={this.state.awayS} />
-        <ShareLive matchId={this.props.params.matchId}/>
+        <ShareLive matchId={this.props.params.matchId} awayT={this.state.awayT} homeT={this.state.homeT}/>
         <Table>
           <tbody>
             {this.state.goals.map((goal) => <tr key={goal._id}><td>{goal.time}</td><td>{goal.score}</td><td>{goal.scorer}</td></tr>)}

@@ -199,7 +199,7 @@ class MatchAdmin extends Component {
     return (
       <section>
         <MatchInfoBox time={this.state.time} homeT={this.state.homeT} awayT={this.state.awayT} homeS={this.state.homeS} awayS={this.state.awayS} />
-        <ShareLive matchId={this.props.params.matchId}/>
+        <ShareLive matchId={this.props.params.matchId} awayT={this.state.awayT} homeT={this.state.homeT}/>
         <Flexbox style={style.actionsAreaStyle} justifyContent="space-around">
           <Button color="primary" onClick={this.toggleGoalForm.bind(this)}>+ 1 Goal</Button>
           <Button color="danger" onClick={this.checkIfUnscubscribeIsPossible.bind(this)}>Se désinscrire</Button>
