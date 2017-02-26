@@ -73,7 +73,7 @@ function receiveLogout() {
 // Opens the Lock widget and
 // dispatches actions along the way
 export function login() {
-  const lock = new Auth0Lock('PQHzFSu9u8r1k0HUU9KL4NbOESfrqQhl', 'camel113.eu.auth0.com',{auth:{redirect:false}});
+  const lock = new Auth0Lock('PQHzFSu9u8r1k0HUU9KL4NbOESfrqQhl', 'camel113.eu.auth0.com',{auth:{redirect:false},autoclose:true});
   return dispatch => {
   	lock.show()
   	lock.on('authenticated', function(authResult){
