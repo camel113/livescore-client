@@ -121,7 +121,11 @@ class AvailableMatch extends Component {
         <Modal isOpen={this.state.reportOpen} toggle={this.toggleReportModal.bind(this)} className={this.props.className}>
           <ModalHeader>Confirmation</ModalHeader>
           <ModalBody>
-            Confirmes-tu ton choix? Tu seras le seul à pouvoir reporter le score de ce match en direct.
+            <Flexbox className={(this.state.live ? 'live' : 'not-live')} flexDirection="row" width="100%">
+              <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
+              <Match homeTeam={this.props.homeTeam} awayTeam={this.props.awayTeam}/>
+            </Flexbox>
+            <p>Confirmes-tu ton choix? Tu seras le seul à pouvoir reporter le score de ce match en direct.</p>
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.handleReportConfirm.bind(this)}>Oui</Button>
