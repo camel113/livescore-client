@@ -6,6 +6,7 @@ import {browserHistory} from 'react-router';
 import { withRouter } from 'react-router';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
+import { Router } from 'react-router'
 import Edit from 'react-icons/lib/fa/edit';
 
 import Match from './Match';
@@ -29,7 +30,8 @@ class AvailableMatch extends Component {
 
   _handleResponse(json){
     if(json.updated == true){
-      console.log("SNACK SUCESS")
+      console.log("SNACK SUCCESS")
+      this.props.router.push('/my')
     }else{
       console.log("SNACK FAIL")
     }
@@ -37,8 +39,6 @@ class AvailableMatch extends Component {
 
   handleReportConfirm(){
     this.setState({reportOpen: false});
-    
-    console.log(this.props.matchId)
 
     fetch('http://api.footstats.ch/api/matchs/'+this.props.matchId, {
       method: 'PUT', 
@@ -53,7 +53,7 @@ class AvailableMatch extends Component {
     })
     .then(response => response.json())
     .then(json => this._handleResponse(json))
-    .catch(error => this.showError());
+    .catch(error => this.showError(error));
 
   };
 
@@ -73,7 +73,8 @@ class AvailableMatch extends Component {
     this.setState({errorOpen: false}); 
   }
 
-  showError(){
+  showError(error){
+    console.log(error)
     this.setState({errorOpen: true});  
   }
 
@@ -120,7 +121,7 @@ class AvailableMatch extends Component {
         <Modal isOpen={this.state.reportOpen} toggle={this.toggleReportModal.bind(this)} className={this.props.className}>
           <ModalHeader>Confirmation</ModalHeader>
           <ModalBody>
-            Confirmes-tu ton choix de reporter ce match? Tu seras le seul à pouvoir reporter le score de ce match en direct.
+            Confirmes-tu ton choix? Tu seras le seul à pouvoir reporter le score de ce match en direct.
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.handleReportConfirm.bind(this)}>Oui</Button>
@@ -140,9 +141,9 @@ class AvailableMatch extends Component {
         </Modal>
 
         <Modal isOpen={this.state.errorOpen} toggle={this.toggleErrorModal.bind(this)} className={this.props.className}>
-          <ModalHeader toggle={this.toggleErrorModal}>Login requis</ModalHeader>
+          <ModalHeader toggle={this.toggleErrorModal}>Oups!</ModalHeader>
           <ModalBody>
-            Il semblerait qu'il y ait un problème de connexion. Veuillez réessayer dans quelques minutes
+            Il semblerait qu'il y ait un problème de connexion. Réessaie dans quelques minutes
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.hideError.bind(this)}>Annuler</Button>
