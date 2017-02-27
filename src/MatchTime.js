@@ -8,7 +8,7 @@ class LiveMatch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {duration: "",futur:""};
+    this.state = {duration: "",futur:"",computed:false};
   }
 
   componentDidMount() {
@@ -23,6 +23,7 @@ class LiveMatch extends Component {
   }
 
   computeTime(matchDate){
+    this.state.computed = true
     var dateNow = Date.now();
     var minutes = moment(dateNow).diff(matchDate, 'minutes')
     if(minutes < 0){
@@ -56,19 +57,46 @@ class LiveMatch extends Component {
   }
 
   render() {
-    var dateVisible = {
-      display:"block",
+    var style = {
+      dateVisible: {
+        display:"block"
+      },
+      dateInvisible:{
+        display:"none",
+      },
+      timeStyle:{
+        fontSize: "0.8em",
+        fontStyle: "italic"
+      },
+      durationStyle:{
+        fontSize: "1em",
+        fontStyle: "normal"
+      },
+      timeCapsule:{
+        alignItems: "center",
+        justifyContent: "center"
+      }
     }
-    var dateInvisible = {
-      display:"none",
-    }
+    const computed = this.state.computed
     return (
-      <Flexbox className="time-capsule" flexDirection="column" minWidth="50px">
-        <div style={(this.state.futur != "" ? dateVisible : dateInvisible)}>{this.state.futur}</div>
-        <div className="time">{this.state.duration}</div>
+      <Flexbox style={style.timeCapsule} flexDirection="column" minWidth="50px">
+        {computed == true &&
+          <div>
+            <div style={(this.state.futur != "" ? Object.assign(style.timeStyle, style.dateVisible) : style.dateInvisible)}>{this.state.futur}</div>
+            <div style={(this.state.duration != "" && this.state.futur == "" ? style.durationStyle : style.timeStyle)} className="time">{this.state.duration}</div>
+          </div>
+        }
+        {computed == false &&
+          <div className="spinner">
+            <div className="double-bounce1"></div>
+            <div className="double-bounce2"></div>
+          </div>
+        }
       </Flexbox>
     );
   }
 }
+
+
 
 export default LiveMatch;

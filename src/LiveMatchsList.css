@@ -1,11 +1,3 @@
-.time, .teams>div{
-	padding: 0 4px;
-	/*font-size: 0.9em;*/
-}
-.time-capsule{
-	align-items: center;
-	justify-content: center;
-}
 .match>div{
 	/*border-top: 1px solid black;*/
 	padding: 5px 0;
@@ -21,8 +13,4 @@
 }
 .not-live{
 	border-left: 4px solid #fff;
-}
-.not-live .time-capsule{
-	font-size: 0.8em;
-	font-style: italic;
 }

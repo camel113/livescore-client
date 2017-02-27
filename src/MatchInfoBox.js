@@ -37,7 +37,7 @@ class MatchInfoBox extends Component {
     }
     return (
       <Flexbox flexGrow={1} flexDirection="row" style={this.state.live ? Object.assign(style.matchBox, style.live) : Object.assign(style.matchBox, style.notLive)} minWidth="0px">
-        <MatchTime time={this.props.time} live={this.updateLive.bind(this)}/>
+        <MatchTime style={this.state.live ? Object.assign(style.matchBox, style.live) : Object.assign(style.matchBox, style.notLive)} time={this.props.time} live={this.updateLive.bind(this)}/>
         <Match homeTeam={this.props.homeT} awayTeam={this.props.awayT}/>
         <Score homeTeamScore={this.props.homeS} awayTeamScore={this.props.awayS} />
       </Flexbox>
