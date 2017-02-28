@@ -73,7 +73,23 @@ function receiveLogout() {
 // Opens the Lock widget and
 // dispatches actions along the way
 export function login() {
-  const lock = new Auth0Lock('PQHzFSu9u8r1k0HUU9KL4NbOESfrqQhl', 'camel113.eu.auth0.com',{auth:{redirect:false},autoclose:true});
+  const lock = new Auth0Lock('PQHzFSu9u8r1k0HUU9KL4NbOESfrqQhl', 'camel113.eu.auth0.com',{auth:{redirect:false},autoclose:true,languageDictionary:{
+    title: "Footsats",
+    lastLoginInstructions: "La dernière fois tu t'es connecté avec",
+    notYourAccountAction: "Ce n'est pas ton compte?", 
+    loginLabel: "Se connecter",
+    loginSubmitLabel: "Se connecter",
+    loginWithLabel: "Se connecter avec %s",
+    signUpWithLabel: "S'inscrire avec %s",
+    databaseEnterpriseAlternativeLoginInstructions: "ou",
+    databaseAlternativeSignUpInstructions: "ou",
+    emailInputPlaceholder: "moi@exemple.com",
+    passwordInputPlaceholder: "Ton mot de passe",
+    forgotPasswordAction: "Tu as oublié ton mot de passe?",
+    signupTitle: "S'inscrire",
+    signUpLabel: "S'inscrire",
+    signUpSubmitLabel: "S'inscrire"}
+  });
   return dispatch => {
   	lock.show()
   	lock.on('authenticated', function(authResult){
