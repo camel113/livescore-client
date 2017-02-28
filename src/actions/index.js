@@ -74,6 +74,17 @@ function receiveLogout() {
 // dispatches actions along the way
 export function login() {
   const lock = new Auth0Lock('PQHzFSu9u8r1k0HUU9KL4NbOESfrqQhl', 'camel113.eu.auth0.com',{auth:{redirect:false},autoclose:true,languageDictionary:{
+    login: {
+      "blocked_user": "L'utilisateur est bloqué.",
+      "invalid_user_password": "Mauvais compte ou mot depasse.",
+      "lock.fallback": "Désolé une erreur s'est produite.",
+      "lock.invalid_code": "Mauvais mot de passe",
+      "lock.invalid_email_password": "Mauvais compte ou mot depasse.",
+      "lock.invalid_username_password": "Mauvais compte ou mot depasse.",
+      "lock.network": "Nous ne parvenons pas à te connecter. Check ta connection et réessaie.",
+      "too_many_attempts": "Ton compte a été bloqué car tu as essayé trop de fois de te connecter.",
+      "hrd.not_matching_email": "Email inconnu"
+    },
     title: "Footsats",
     lastLoginInstructions: "La dernière fois tu t'es connecté avec",
     notYourAccountAction: "Ce n'est pas ton compte?", 
