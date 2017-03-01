@@ -1,14 +1,36 @@
 import React, { Component } from 'react';
 import LiveMatchsSection from './LiveMatchsSection';
+import Flexbox from 'flexbox-react';
 import './LiveMatchsList.css';
 
 class LiveMatchsList extends Component {
+
   render() {
-    return (
-      <div className="list">
-        {this.state.matchs.map((league) => <LiveMatchsSection key={league.region+league.league} region={league.region} league={league.league} matchs={league.matchs}/>)}
-      </div>
-    );
+
+    if(this.state.loaded == false){
+      return(
+        <Flexbox flexDirection="column" alignItems="center" marginTop="40px" minWidth="50px">
+          <div className="spinner">
+            <div className="double-bounce1"></div>
+            <div className="double-bounce2"></div>
+          </div>
+        </Flexbox>
+      )
+    }else{
+      if (this.state.matchs.length > 0) {
+        return (
+          <div className="list">
+            {this.state.matchs.map((league) => <LiveMatchsSection key={league.region+league.league} region={league.region} league={league.league} matchs={league.matchs}/>)}
+          </div>
+        );
+      }else{
+        return (
+          <Flexbox flexDirection="column" alignItems="center" marginTop="20px" minWidth="50px">
+            <p>Aucun match de prévu pour le moment...</p>
+          </Flexbox>
+        )
+      }
+    }
   }
 
   constructor(props) {
@@ -44,8 +66,6 @@ class LiveMatchsList extends Component {
 
   _handleResponse(response) {
     var data = response
-    console.log(data)
-    // data.map((match) => <LiveMatch/>);
     this.setState({
       loaded: true,
       matchs: data

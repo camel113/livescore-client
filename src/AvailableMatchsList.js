@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AvailableMatchsSection from './AvailableMatchsSection';
+import Flexbox from 'flexbox-react';
 
 class AvailableMatchsList extends Component {
 
@@ -39,11 +40,31 @@ class AvailableMatchsList extends Component {
   }
 
   render() {
-    return (
-      <section id="available">
-      		{this.state.matchs.map((league) => <AvailableMatchsSection key={league.region+league.league} region={league.region} league={league.league} matchs={league.matchs}/>)}
-      </section>
-    );
+
+    if(this.state.loaded == false){
+      return(
+        <Flexbox flexDirection="column" alignItems="center" marginTop="40px" minWidth="50px">
+          <div className="spinner">
+            <div className="double-bounce1"></div>
+            <div className="double-bounce2"></div>
+          </div>
+        </Flexbox>
+      )
+    }else{
+      if (this.state.matchs.length > 0) {
+        return (
+          <section id="available">
+            {this.state.matchs.map((league) => <AvailableMatchsSection key={league.region+league.league} region={league.region} league={league.league} matchs={league.matchs}/>)}
+          </section>
+        );
+      }else{
+        return (
+          <Flexbox flexDirection="column" alignItems="center" marginTop="20px" minWidth="50px">
+            <p>Aucun match de prévu pour le moment...</p>
+          </Flexbox>
+        )
+      }
+    }
   }
 }
 
